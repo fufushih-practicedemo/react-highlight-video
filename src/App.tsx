@@ -48,7 +48,9 @@ function App() {
       <div className="w-full md:w-1/2 bg-gray-200 order-2 md:order-1">
         <EditingArea 
           transcript={transcript} 
-          setTranscript={setTranscript} 
+          setTranscript={setTranscript}
+          progress={progress}
+          duration={duration}
         />
       </div>
       <div className="w-full md:w-1/2 bg-red-200 order-1 md:order-2">

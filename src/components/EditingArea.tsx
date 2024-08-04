@@ -4,9 +4,11 @@ import { Transcript } from '../types/transcript';
 interface EditingAreaProps {
   transcript: Transcript;
   setTranscript: React.Dispatch<React.SetStateAction<Transcript>>;
+  progress: number;
+  duration: number;
 }
 
-const EditingArea: React.FC<EditingAreaProps> = ({ transcript, setTranscript }) => {
+const EditingArea: React.FC<EditingAreaProps> = ({ transcript, setTranscript, progress, duration }) => {
   const handleHighlightToggle = (id: number) => {
     setTranscript(prevTranscript => 
       prevTranscript.map(sentence => 
@@ -14,6 +16,27 @@ const EditingArea: React.FC<EditingAreaProps> = ({ transcript, setTranscript }) 
       )
     );
   };
+
+  const getCurrentSentenceId = () => {
+    const currentTime = progress * duration;
+    for (let i = 0; i < transcript.length; i++) {
+      const currentTimestamp = timestampToSeconds(transcript[i].timestamp);
+      const nextTimestamp = i < transcript.length - 1 
+        ? timestampToSeconds(transcript[i + 1].timestamp) 
+        : duration;
+      if (currentTime >= currentTimestamp && currentTime < nextTimestamp) {
+        return transcript[i].id;
+      }
+    }
+    return null;
+  };
+
+  const timestampToSeconds = (timestamp: string): number => {
+    const [minutes, seconds] = timestamp.split(':').map(Number);
+    return minutes * 60 + seconds;
+  };
+
+  const currentSentenceId = getCurrentSentenceId();
 
   return (
     <section id="Editing" className="p-4">
@@ -23,6 +46,8 @@ const EditingArea: React.FC<EditingAreaProps> = ({ transcript, setTranscript }) 
           key={sentence.id} 
           className={`flex items-center mb-2 p-2 rounded cursor-pointer ${
             sentence.isHighlight ? 'bg-blue-100' : 'bg-white'
+          } ${
+            sentence.id === currentSentenceId ? 'border-2 border-red-500' : ''
           }`}
           onClick={() => handleHighlightToggle(sentence.id)}
         >
