@@ -11,6 +11,7 @@ interface PreviewAreaProps {
   handlePlayPause: () => void;
   handleProgress: (state: { played: number }) => void;
   handleDuration: (duration: number) => void;
+  seekTime: number | null;
 }
 
 const PreviewArea: React.FC<PreviewAreaProps> = ({
@@ -20,7 +21,8 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
   transcript,
   handlePlayPause,
   handleProgress,
-  handleDuration
+  handleDuration,
+  seekTime
 }) => {
   const playerRef = useRef<ReactPlayer>(null);
   const [videoDuration, setVideoDuration] = useState(0);
@@ -32,7 +34,13 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
         setVideoDuration(player.getDuration());
       }
     }
-  }, [playerRef.current]);
+  }, []);
+
+  useEffect(() => {
+    if (seekTime !== null && playerRef.current) {
+      playerRef.current.seekTo(seekTime);
+    }
+  }, [seekTime]);
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     const bounds = e.currentTarget.getBoundingClientRect();

@@ -9,6 +9,7 @@ function App() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [transcriptData, setTranscriptData] = useState<TranscriptData | null>(null);
+  const [seekTime, setSeekTime] = useState<number | null>(null);
 
   useEffect(() => {
     const loadTranscriptData = async () => {
@@ -41,10 +42,13 @@ function App() {
     }
   }
 
+  const handleSeek = (time: number) => {
+    setSeekTime(time);
+  };
+
   if (!transcriptData) {
     return <div>Loading...</div>;
   }
-
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
@@ -54,6 +58,7 @@ function App() {
           onTranscriptChange={handleTranscriptUpdate}
           progress={progress}
           duration={duration}
+          onSeek={handleSeek}
         />
       </div>
       <div className="w-full md:w-1/2 bg-red-200 order-1 md:order-2">
@@ -65,6 +70,7 @@ function App() {
           handlePlayPause={handlePlayPause}
           handleProgress={handleProgress}
           handleDuration={handleDuration}
+          seekTime={seekTime}
         />
       </div>
     </div>
