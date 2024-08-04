@@ -26,8 +26,8 @@ Highlight Video is a powerful React-based web application designed for interacti
 
 ### Prerequisites
 
-- Node.js (v14 or later recommended)
-- npm or yarn package manager
+- Node.js (v18 or later recommended)
+- pnpm package manager
 
 ### Installation
 
