@@ -42,12 +42,6 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
     }
   }, [seekTime]);
 
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    const bounds = e.currentTarget.getBoundingClientRect();
-    const percent = (e.clientX - bounds.left) / bounds.width;
-    playerRef.current?.seekTo(percent);
-  }
-
   const formatTime = (seconds: number) => {
     const date = new Date(seconds * 1000);
     const mm = date.getUTCMinutes();
@@ -71,6 +65,25 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
   }, [sentences]);
 
   const effectiveDuration = Math.max(videoDuration, transcriptDuration);
+
+
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const bounds = e.currentTarget.getBoundingClientRect();
+    const percent = (e.clientX - bounds.left) / bounds.width;
+    playerRef.current?.seekTo(percent);
+  }
+
+  const handleSeekStart = () => {
+    if(playerRef.current) {
+      playerRef.current.seekTo(0);
+    }
+  }
+  const handleSeekEnd = () => {
+    if(playerRef.current) {
+      playerRef.current.seekTo(effectiveDuration);
+    }
+  }
+
 
   return (
     <section id="Preview" className="bg-gray-900 h-full p-4">      
@@ -96,7 +109,11 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
       <div id="video-controls" className="mt-4 bg-gray-800 p-2 rounded">
         <div id="control-buttons" className="flex items-center justify-between mb-2">
           <div className="flex space-x-12">
-            <button id="seek-start" className="text-white p-2 rounded hover:bg-gray-700">
+            <button 
+              id="seek-start"
+              onClick={handleSeekStart}
+              className="text-white p-2 rounded hover:bg-gray-700"
+            >
               <ChevronFirst size={24} />
             </button>
             <button
@@ -106,7 +123,11 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
             >
               {playing ? <Pause className="mr-1" size={24} /> : <Play className="mr-1" size={24} />}
             </button>
-            <button id="seek-end" className="text-white p-2 rounded hover:bg-gray-700">
+            <button 
+              id="seek-end" 
+              onClick={handleSeekEnd}
+              className="text-white p-2 rounded hover:bg-gray-700"
+            >
               <ChevronLast size={24} />
             </button>
           </div>

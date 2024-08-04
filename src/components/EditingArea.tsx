@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Transcript, TranscriptItem, Sentence } from '../types/transcript';
 import { Star } from 'lucide-react';
 
@@ -17,6 +17,9 @@ const EditingArea: React.FC<EditingAreaProps> = ({
   duration,
   onSeek 
 }) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const currentSentenceRef = useRef<HTMLDivElement>(null);
+
   const handleHighlightToggle = (id: number) => {
     const newTranscript = transcript.map(item => 
       item.type === 'sentence' && item.id === id ? { ...item, isHighlight: !item.isHighlight } : item
@@ -53,40 +56,53 @@ const EditingArea: React.FC<EditingAreaProps> = ({
 
   const currentSentenceId = getCurrentSentenceId();
 
+  useEffect(() => {
+    if (currentSentenceRef.current && scrollContainerRef.current) {
+      currentSentenceRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [currentSentenceId]);
+
   const renderTranscriptItem = (item: TranscriptItem) => {
     if (item.type === 'heading') {
-      return <h3 key={item.id} className="text-xl font-bold mt-4 mb-2">{item.text}</h3>;
+      return <h3 key={item.id} className="text-xl font-bold mt-6 mb-3">{item.text}</h3>;
     }
-
+  
     return (
       <div 
         key={item.id}
-        className={`
-          flex items-center justify-between mb-2 p-2 rounded
-          ${item.isHighlight ? 'bg-blue-100' : 'bg-white'}
-          ${item.id === currentSentenceId ? 'border-2 border-red-500' : ''}
-        `}
+        ref={item.id === currentSentenceId ? currentSentenceRef : null}
+        className="
+          flex items-stretch mb-2 gap-2
+          min-h-[60px] transition-all duration-200 ease-in-out
+        "
       >
         <div 
-          className='flex items-center flex-grow cursor-pointer' 
+          className={`
+            flex items-center flex-grow cursor-pointer p-2 rounded
+            ${item.isHighlight ? 'bg-blue-100' : 'bg-white'}
+            ${item.id === currentSentenceId ? 'ring-4 ring-red-400' : ''}
+          `}
           onClick={() => handleSentenceClick(item.timestamp)}
         >
-          <span className="w-16 text-sm text-gray-500">
+          <span className="w-16 text-sm text-gray-500 flex-shrink-0">
             {item.timestamp}
           </span>
-          <p className="flex-grow p-2 rounded bg-transparent">
+          <p className="flex-grow px-2">
             {item.text}
           </p>
         </div>
-        <div className='ml-4'>
+        <div className='flex items-center'>
           <button
-            onClick={() => handleHighlightToggle(item.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleHighlightToggle(item.id);
+            }}
             className={`
-              p-1 rounded-full hover:bg-gray-200
+              p-1 rounded-full hover:bg-gray-200 transition-colors duration-200
               ${item.isHighlight ? 'text-yellow-500' : 'text-gray-400'}
             `}
           >
-            <Star size={20} />
+            <Star size={24} fill={item.isHighlight ? 'currentColor' : 'none'} />
           </button>
         </div>
       </div>
@@ -94,9 +110,14 @@ const EditingArea: React.FC<EditingAreaProps> = ({
   };
 
   return (
-    <section id="Editing" className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Transcript</h2>
-      {transcript.map(renderTranscriptItem)}
+    <section id="Editing" className="flex flex-col h-full">
+      <h2 className="text-2xl font-bold mb-4 px-4 pt-4">Transcript</h2>
+      <div 
+        ref={scrollContainerRef}
+        className="flex-grow overflow-y-auto px-4 pb-4 no-scrollbar"
+      >
+        {transcript.map(renderTranscriptItem)}
+      </div>
     </section>
   );
 };
