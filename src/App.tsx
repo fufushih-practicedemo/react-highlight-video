@@ -68,7 +68,7 @@ function App() {
           progress={progress}
           transcript={transcriptData.transcript}
           handlePlayPause={handlePlayPause}
-          handleProgress={handleProgress}
+          onProgress={handleProgress}
           handleDuration={handleDuration}
           seekTime={seekTime}
         />

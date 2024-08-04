@@ -9,7 +9,7 @@ interface PreviewAreaProps {
   progress: number;
   transcript: Transcript;
   handlePlayPause: () => void;
-  handleProgress: (state: { played: number }) => void;
+  onProgress: (state: { played: number }) => void;
   handleDuration: (duration: number) => void;
   seekTime: number | null;
 }
@@ -20,7 +20,7 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
   progress,
   transcript,
   handlePlayPause,
-  handleProgress,
+  onProgress,
   handleDuration,
   seekTime
 }) => {
@@ -99,7 +99,7 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
           controls={false}
           light={false}
           pip={true}
-          onProgress={handleProgress}
+          onProgress={onProgress}
           onDuration={(d) => {
             setVideoDuration(d);
             handleDuration(d);
