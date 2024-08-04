@@ -3,18 +3,17 @@ import { Transcript } from '../types/transcript';
 
 interface EditingAreaProps {
   transcript: Transcript;
-  setTranscript: React.Dispatch<React.SetStateAction<Transcript>>;
+  onTranscriptChange: (newTranscript: Transcript) => void;
   progress: number;
   duration: number;
 }
 
-const EditingArea: React.FC<EditingAreaProps> = ({ transcript, setTranscript, progress, duration }) => {
+const EditingArea: React.FC<EditingAreaProps> = ({ transcript, onTranscriptChange, progress, duration }) => {
   const handleHighlightToggle = (id: number) => {
-    setTranscript(prevTranscript => 
-      prevTranscript.map(sentence => 
-        sentence.id === id ? { ...sentence, isHighlight: !sentence.isHighlight } : sentence
-      )
+    const newTranscript = transcript.map(sentence => 
+      sentence.id === id ? { ...sentence, isHighlight: !sentence.isHighlight } : sentence
     );
+    onTranscriptChange(newTranscript);
   };
 
   const getCurrentSentenceId = () => {

@@ -4,6 +4,7 @@ import { Play, Pause, ChevronFirst, ChevronLast } from 'lucide-react';
 import { Transcript } from "../types/transcript";
 
 interface PreviewAreaProps {
+  videoUrl: string;
   playing: boolean;
   progress: number;
   duration: number;
@@ -14,6 +15,7 @@ interface PreviewAreaProps {
 }
 
 const PreviewArea: React.FC<PreviewAreaProps> = ({
+  videoUrl,
   playing,
   progress,
   duration,
@@ -65,7 +67,7 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
           className="react-player"
           width="100%"
           height="400px"
-          url={'https://www.youtube.com/watch?v=kI6Ssgg5HLA'}
+          url={videoUrl}
           playing={playing}
           controls={false}
           light={false}

@@ -1,17 +1,17 @@
-import { TranscriptSchema, Transcript } from '../types/transcript';
-import { getMockTranscript } from '../utils/mockApi';
+import { TranscriptDataSchema, TranscriptData } from '../types/transcript';
+import { getMockTranscriptData } from '../utils/mockApi';
 
-export const fetchTranscript = async (): Promise<Transcript> => {
+export const fetchTranscriptData = async (): Promise<TranscriptData> => {
   try {
     // TODO: use real api
     // const response = await fetch('API_URL');
     // const data = await response.json();
-    const data = await getMockTranscript();
+    const data = await getMockTranscriptData();
     
-    const validatedData = TranscriptSchema.parse(data);
+    const validatedData = TranscriptDataSchema.parse(data);
     return validatedData;
   } catch (error) {
-    console.error('Error fetching transcript:', error);
+    console.error('Error fetching transcript data: ', error);
     throw error;
   }
 };
