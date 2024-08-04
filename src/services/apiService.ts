@@ -15,3 +15,17 @@ export const fetchTranscriptData = async (): Promise<TranscriptData> => {
     throw error;
   }
 };
+
+export const uploadVideo = async (file: File | null, url: string | null): Promise<TranscriptData> => {
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      if (file) {
+        console.log(`Uploading file: ${file.name}`);
+      } else if (url) {
+        console.log(`Processing URL: ${url}`);
+      }
+      const data = await getMockTranscriptData();
+      resolve(data);
+    }, 3000);
+  });
+};
