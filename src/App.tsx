@@ -1,5 +1,3 @@
-// App.tsx
-
 import { useState } from "react";
 import EditingArea from "./components/EditingArea"
 import PreviewArea from "./components/PreviewArea"
