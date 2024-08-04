@@ -61,7 +61,6 @@ function App() {
           videoUrl={transcriptData.videoUrl}
           playing={playing}
           progress={progress}
-          duration={duration}
           transcript={transcriptData.transcript}
           handlePlayPause={handlePlayPause}
           handleProgress={handleProgress}

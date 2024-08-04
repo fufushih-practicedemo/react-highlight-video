@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useEffect, useState } from "react";
 import ReactPlayer from "react-player"
 import { Play, Pause, ChevronFirst, ChevronLast } from 'lucide-react';
 import { Sentence, Transcript } from "../types/transcript";
@@ -7,7 +7,6 @@ interface PreviewAreaProps {
   videoUrl: string;
   playing: boolean;
   progress: number;
-  duration: number;
   transcript: Transcript;
   handlePlayPause: () => void;
   handleProgress: (state: { played: number }) => void;
@@ -18,13 +17,22 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
   videoUrl,
   playing,
   progress,
-  duration,
   transcript,
   handlePlayPause,
   handleProgress,
   handleDuration
 }) => {
   const playerRef = useRef<ReactPlayer>(null);
+  const [videoDuration, setVideoDuration] = useState(0);
+
+  useEffect(() => {
+    if (playerRef.current) {
+      const player = playerRef.current.getInternalPlayer();
+      if (player?.getDuration) {
+        setVideoDuration(player.getDuration());
+      }
+    }
+  }, [playerRef.current]);
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     const bounds = e.currentTarget.getBoundingClientRect();
@@ -44,21 +52,17 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
     return minutes * 60 + seconds;
   };
 
-  const sentences = useMemo(() => transcript.filter((item): item is Sentence => item.type === 'sentence'), [transcript]);
+  const sentences = useMemo(() => {
+    return transcript.filter((item): item is Sentence => item.type === 'sentence')
+  }, [transcript]);
 
-  const highlightRanges = useMemo(() => {
-    const ranges: {start: number, end: number}[] = [];
-    sentences.forEach((sentence, index) => {
-      if (sentence.isHighlight) {
-        const start = timestampToSeconds(sentence.timestamp);
-        const end = index < sentences.length - 1 
-          ? timestampToSeconds(sentences[index + 1].timestamp)
-          : duration;
-        ranges.push({start, end});
-      }
-    });
-    return ranges;
-  }, [sentences, duration]);
+  const transcriptDuration = useMemo(() => {
+    if (sentences.length === 0) return 0;
+    const lastSentence = sentences[sentences.length - 1];
+    return timestampToSeconds(lastSentence.timestamp);
+  }, [sentences]);
+
+  const effectiveDuration = Math.max(videoDuration, transcriptDuration);
 
   return (
     <section id="Preview" className="bg-gray-900 h-full p-4">      
@@ -75,7 +79,10 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
           light={false}
           pip={true}
           onProgress={handleProgress}
-          onDuration={handleDuration}
+          onDuration={(d) => {
+            setVideoDuration(d);
+            handleDuration(d);
+          }}
         />
       </div>
       <div id="video-controls" className="mt-4 bg-gray-800 p-2 rounded">
@@ -95,7 +102,7 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
               <ChevronLast size={24} />
             </button>
           </div>
-          <span id="time-display" className="text-white text-2xl">{formatTime(progress * 300)}</span>
+          <span id="time-display" className="text-white text-2xl">{formatTime(progress * videoDuration)}</span>
         </div>
         <div
           id="progress-bar"
@@ -106,34 +113,19 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
             const startTime = timestampToSeconds(sentence.timestamp);
             const endTime = index < sentences.length - 1 
               ? timestampToSeconds(sentences[index + 1].timestamp)
-              : duration;
-            const width = ((endTime - startTime) / duration) * 100;
-            const left = (startTime / duration) * 100;
+              : effectiveDuration;
+            const width = ((endTime - startTime) / effectiveDuration) * 100;
+            const left = (startTime / effectiveDuration) * 100;
 
             return (
               <div
                 key={sentence.id}
                 id={`transcript-section-${sentence.id}`}
-                className="absolute h-full bg-gray-500"
+                className={`absolute h-full ${sentence.isHighlight ? 'bg-blue-500' : 'bg-gray-500'}`}
                 style={{
                   left: `${left}%`,
                   width: `${width}%`,
-                }}
-              />
-            );
-          })}
-          {highlightRanges.map((range, index) => {
-            const width = ((range.end - range.start) / duration) * 100;
-            const left = (range.start / duration) * 100;
-            return (
-              <div
-                key={index}
-                id={`highlight-section-${index}`}
-                className="absolute h-full bg-blue-500"
-                style={{
-                  left: `${left}%`,
-                  width: `${width}%`,
-                  zIndex: 1,
+                  zIndex: sentence.isHighlight ? 1 : 0,
                 }}
               />
             );
@@ -141,7 +133,10 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
           <div
             id="progress-indicator"
             className="absolute h-full w-0.5 bg-red-500"
-            style={{ left: `${progress * 100}%`, zIndex: 2 }}
+            style={{ 
+              left: `${Math.min((progress * videoDuration) / effectiveDuration * 100, 100)}%`, 
+              zIndex: 2 
+            }}
           />
         </div>
       </div>
