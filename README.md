@@ -35,3 +35,30 @@ Highlight Video is a powerful React-based web application designed for interacti
 2. Install dependencies: `pnpm install`
 3. Start the development server: `pnpm run dev`
 4. Open your browser and visit `http://localhost:5173`
+
+### How to use
+
+#### Uploading a Video
+
+When you first open the application, you'll see the upload interface.
+There are two ways to add a video:
+
+Upload a local file
+Provide a video URL
+
+#### Using the Main Interface
+
+Once your video is successfully uploaded or processed, you'll enter the main interface, which is divided into two main sections:
+
+###### Preview Area (Right Side)
+
+- You can watch the video here.
+- Use the playback controls to play/pause the video.
+- Use the progress bar to fast forward or rewind.
+- Toggle "Highlight Mode" to play only the highlighted parts.
+
+###### Editing Area (Left Side)
+
+- You can view and edit the video's transcript here.
+- Click the star icon next to each sentence to highlight or unhighlight it.
+- Click on any sentence to jump the video to the time when that sentence starts.
