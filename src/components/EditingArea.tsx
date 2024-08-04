@@ -41,9 +41,9 @@ const EditingArea: React.FC<EditingAreaProps> = ({ transcript, setTranscript, pr
   return (
     <section id="Editing" className="p-4">
       <h2 className="text-2xl font-bold mb-4">Transcript</h2>
-      {transcript.map(sentence => (
+      {transcript.map((sentence) => (
         <div 
-          key={sentence.id} 
+          key={sentence.id}
           className={`flex items-center mb-2 p-2 rounded cursor-pointer ${
             sentence.isHighlight ? 'bg-blue-100' : 'bg-white'
           } ${

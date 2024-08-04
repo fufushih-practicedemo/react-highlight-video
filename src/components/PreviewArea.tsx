@@ -56,7 +56,8 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
   }, [transcript, duration]);
 
   return (
-    <section id="Preview" className="bg-gray-900 p-4">
+    <section id="Preview" className="bg-gray-900 h-full p-4">      
+      <h2 className="text-2xl font-bold mb-4 text-white">Preview</h2>
       <div className="relative">
         <ReactPlayer
           ref={playerRef}
