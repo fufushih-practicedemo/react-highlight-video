@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
+# Highlight Video
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Highlight Video is a powerful React-based web application designed for interactive video transcript editing and playback. This tool allows users to seamlessly view videos, edit transcripts, and highlight key moments, making it ideal for content creators, researchers, and anyone working with video content.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Synchronized Video Playback**: Watch videos with a custom-built player that synchronizes perfectly with the transcript.
+- **Interactive Transcript Editing**: Edit and highlight specific sentences in the transcript in real-time.
+- **Highlight Play Mode**: Focus on and play only the highlighted sections of the video.
+- **Custom Video Controls**: Intuitive video controls including play/pause, seek, and progress tracking.
+- **Responsive Design**: Seamlessly adapts to various screen sizes for a consistent user experience across devices.
+- **Visual Progress Indicator**: Clear visual representation of video progress and highlighted sections.
 
-## Expanding the ESLint configuration
+## Technology Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend Framework**: React 18
+- **Language**: TypeScript
+- **Build Tool**: Vite
+- **Styling**: TailwindCSS
+- **Video Playback**: React Player
+- **Icons**: Lucide React
+- **Data Validation**: Zod
+- **Development Tools**: ESLint, PostCSS, Autoprefixer
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Prerequisites
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Node.js (v14 or later recommended)
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies: `pnpm install`
+3. Start the development server: `pnpm run dev`
+4. Open your browser and visit `http://localhost:5173`
