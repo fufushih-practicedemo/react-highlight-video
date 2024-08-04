@@ -2,6 +2,7 @@ import { useMemo, useRef, useEffect, useState } from "react";
 import ReactPlayer from "react-player"
 import { Play, Pause, ChevronFirst, ChevronLast } from 'lucide-react';
 import { Sentence, Transcript } from "../types/transcript";
+import Switch from "./Switch";
 
 interface PreviewAreaProps {
   videoUrl: string;
@@ -26,6 +27,9 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
 }) => {
   const playerRef = useRef<ReactPlayer>(null);
   const [videoDuration, setVideoDuration] = useState(0);
+  const [highlightPlayMode, setHighlightPlayMode] = useState(false);
+  const [currentHighlightIndex, setCurrentHighlightIndex] = useState(0);
+  const [internalProgress, setInternalProgress] = useState(0)
 
   useEffect(() => {
     if (playerRef.current) {
@@ -84,10 +88,68 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
     }
   }
 
+  const highlightSentences = useMemo(() => {
+    return sentences.filter(sentence => sentence.isHighlight);
+  }, [sentences]);
+
+  useEffect(() => {
+    if(highlightPlayMode && playing) {
+      const currentTime = internalProgress * effectiveDuration;
+      if(currentHighlightIndex < highlightSentences.length) {
+        const current = highlightSentences[currentHighlightIndex];
+        const currentHighlightTime = timestampToSeconds(current.timestamp);
+        
+        if (currentTime >= currentHighlightTime) {
+          // 移動到下一個highlight部分
+          setCurrentHighlightIndex(currentHighlightIndex + 1);
+          if (currentHighlightIndex + 1 < highlightSentences.length) {
+            const nextHighlightTime = timestampToSeconds(highlightSentences[currentHighlightIndex + 1].timestamp);
+            playerRef.current?.seekTo(nextHighlightTime / effectiveDuration);
+          } else {
+            // 所有highlight部分播放完畢，停止播放但保持highlight模式
+            handlePlayPause();
+          }
+        } else if (currentTime < currentHighlightTime) {
+          // 如果進度在當前highlight時間之前，跳轉到該時間點
+          playerRef.current?.seekTo(currentHighlightTime / effectiveDuration);
+        }
+      }
+    }
+  }, [highlightPlayMode, playing, internalProgress, currentHighlightIndex, highlightSentences, effectiveDuration, handlePlayPause]);
+
+  const toggleHighlightPlayMode = (newValue: boolean) => {
+    setHighlightPlayMode(newValue);
+    if (!newValue) {
+      return;
+    }
+    
+    setCurrentHighlightIndex(0);
+    if (!playing) {
+      handlePlayPause();
+    }
+    // 切換到highlight模式時，跳轉到第一個highlight時間點
+    if (highlightSentences.length > 0) {
+      const firstHighlightTime = timestampToSeconds(highlightSentences[0].timestamp);
+      playerRef.current?.seekTo(firstHighlightTime / effectiveDuration);
+    }
+    return;
+  };
+
+  const handleInternalProgress = (state: { played: number }) => {
+    setInternalProgress(state.played);
+    onProgress(state);
+  };
+
 
   return (
     <section id="Preview" className="bg-gray-900 h-full p-4">      
-      <h2 className="text-2xl font-bold mb-4 text-white">Preview</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-bold text-white">Preview</h2>
+        <div className="flex items-center">
+          <span className="text-white mr-2">Highlight Mode</span>
+          <Switch value={highlightPlayMode} onClick={toggleHighlightPlayMode} />
+        </div>
+      </div>
       <div className="relative">
         <ReactPlayer
           ref={playerRef}
@@ -99,7 +161,7 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
           controls={false}
           light={false}
           pip={true}
-          onProgress={onProgress}
+          onProgress={handleInternalProgress}
           onDuration={(d) => {
             setVideoDuration(d);
             handleDuration(d);
