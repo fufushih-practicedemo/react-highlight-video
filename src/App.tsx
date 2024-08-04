@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+// App.tsx
+
+import { useState } from "react";
 import EditingArea from "./components/EditingArea"
 import PreviewArea from "./components/PreviewArea"
-import { fetchTranscriptData } from "./services/apiService"
+import VideoUpload from "./components/VideoUpload"
 import { TranscriptData } from "./types/transcript";
 
 function App() {
@@ -10,19 +12,6 @@ function App() {
   const [duration, setDuration] = useState(0);
   const [transcriptData, setTranscriptData] = useState<TranscriptData | null>(null);
   const [seekTime, setSeekTime] = useState<number | null>(null);
-
-  useEffect(() => {
-    const loadTranscriptData = async () => {
-      try {
-        const data = await fetchTranscriptData();
-        setTranscriptData(data);
-      } catch (error) {
-        console.error("Failed to load transcript data:", error);
-      }
-    };
-
-    loadTranscriptData();
-  }, []);
 
   const handlePlayPause = () => {
     setPlaying(!playing);
@@ -46,32 +35,42 @@ function App() {
     setSeekTime(time);
   };
 
-  if (!transcriptData) {
-    return <div>Loading...</div>;
-  }
+  const handleVideoUploaded = (data: TranscriptData) => {
+    setTranscriptData(data);
+  };
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
       <div className="w-full md:w-1/2 bg-gray-200 order-2 md:order-1">
-        <EditingArea 
+      {
+        transcriptData ? (
+          <EditingArea 
           transcript={transcriptData.transcript} 
           onTranscriptChange={handleTranscriptUpdate}
           progress={progress}
           duration={duration}
           onSeek={handleSeek}
         />
+        ) : <div />
+      }
+        
       </div>
-      <div className="w-full md:w-1/2 bg-red-200 order-1 md:order-2">
-        <PreviewArea
-          videoUrl={transcriptData.videoUrl}
-          playing={playing}
-          progress={progress}
-          transcript={transcriptData.transcript}
-          handlePlayPause={handlePlayPause}
-          onProgress={handleProgress}
-          handleDuration={handleDuration}
-          seekTime={seekTime}
-        />
+      <div className="w-full md:w-1/2 bg-gray-900 order-1 md:order-2">
+        {
+          transcriptData ? (
+            <PreviewArea
+              videoUrl={transcriptData.videoUrl}
+              playing={playing}
+              progress={progress}
+              transcript={transcriptData.transcript}
+              handlePlayPause={handlePlayPause}
+              onProgress={handleProgress}
+              handleDuration={handleDuration}
+              seekTime={seekTime}
+            />
+          ) : <VideoUpload onVideoUploaded={handleVideoUploaded} />
+        }
+       
       </div>
     </div>
   )
