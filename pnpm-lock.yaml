@@ -10,6 +10,7 @@ specifiers:
   eslint: ^8.57.0
   eslint-plugin-react-hooks: ^4.6.2
   eslint-plugin-react-refresh: ^0.4.7
+  lucide-react: ^0.424.0
   postcss: ^8.4.40
   react: ^18.3.1
   react-dom: ^18.3.1
@@ -20,6 +21,7 @@ specifiers:
   zod: ^3.23.8
 
 dependencies:
+  lucide-react: 0.424.0_react@18.3.1
   react: 18.3.1
   react-dom: 18.3.1_react@18.3.1
   react-player: 2.16.0_react@18.3.1
@@ -1715,6 +1717,14 @@ packages:
     dependencies:
       yallist: 3.1.1
     dev: true
+
+  /lucide-react/0.424.0_react@18.3.1:
+    resolution: {integrity: sha512-x2Nj2aytk1iOyHqt4hKenfVlySq0rYxNeEf8hE0o+Yh0iE36Rqz0rkngVdv2uQtjZ70LAE73eeplhhptYt9x4Q==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
+    dependencies:
+      react: 18.3.1
+    dev: false
 
   /memoize-one/5.2.1:
     resolution: {integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==}
