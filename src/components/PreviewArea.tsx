@@ -1,5 +1,6 @@
 import { useMemo, useRef } from "react";
 import ReactPlayer from "react-player"
+import { Play, Pause, ChevronFirst, ChevronLast } from 'lucide-react';
 import { Transcript } from "../types/transcript";
 
 interface PreviewAreaProps {
@@ -75,26 +76,26 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
       </div>
       <div id="video-controls" className="mt-4 bg-gray-800 p-2 rounded">
         <div id="control-buttons" className="flex items-center justify-between mb-2">
-          <div className="flex space-x-2">
+          <div className="flex space-x-12">
             <button id="seek-start" className="text-white p-2 rounded hover:bg-gray-700">
-              最左
+              <ChevronFirst size={24} />
             </button>
             <button
               id="play-pause"
               onClick={handlePlayPause}
               className="text-white p-2 rounded hover:bg-gray-700"
             >
-              {playing ? '暫停' : '播放'}
+              {playing ? <Pause className="mr-1" size={24} /> : <Play className="mr-1" size={24} />}
             </button>
             <button id="seek-end" className="text-white p-2 rounded hover:bg-gray-700">
-              最右
+              <ChevronLast size={24} />
             </button>
           </div>
-          <span id="time-display" className="text-white">{formatTime(progress * 300)}</span>
+          <span id="time-display" className="text-white text-2xl">{formatTime(progress * 300)}</span>
         </div>
         <div
           id="progress-bar"
-          className="h-2 bg-gray-700 rounded cursor-pointer relative"
+          className="h-4 bg-gray-700 rounded cursor-pointer relative"
           onClick={handleSeek}
         >
           {transcript.map((sentence, index) => {
