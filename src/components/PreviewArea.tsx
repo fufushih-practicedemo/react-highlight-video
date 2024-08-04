@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react";
 import ReactPlayer from "react-player"
 import { Play, Pause, ChevronFirst, ChevronLast } from 'lucide-react';
-import { Transcript } from "../types/transcript";
+import { Sentence, Transcript } from "../types/transcript";
 
 interface PreviewAreaProps {
   videoUrl: string;
@@ -44,19 +44,21 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
     return minutes * 60 + seconds;
   };
 
+  const sentences = useMemo(() => transcript.filter((item): item is Sentence => item.type === 'sentence'), [transcript]);
+
   const highlightRanges = useMemo(() => {
     const ranges: {start: number, end: number}[] = [];
-    transcript.forEach((sentence, index) => {
+    sentences.forEach((sentence, index) => {
       if (sentence.isHighlight) {
         const start = timestampToSeconds(sentence.timestamp);
-        const end = index < transcript.length - 1 
-          ? timestampToSeconds(transcript[index + 1].timestamp)
+        const end = index < sentences.length - 1 
+          ? timestampToSeconds(sentences[index + 1].timestamp)
           : duration;
         ranges.push({start, end});
       }
     });
     return ranges;
-  }, [transcript, duration]);
+  }, [sentences, duration]);
 
   return (
     <section id="Preview" className="bg-gray-900 h-full p-4">      
@@ -100,10 +102,10 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
           className="h-4 bg-gray-700 rounded cursor-pointer relative"
           onClick={handleSeek}
         >
-          {transcript.map((sentence, index) => {
+          {sentences.map((sentence, index) => {
             const startTime = timestampToSeconds(sentence.timestamp);
-            const endTime = index < transcript.length - 1 
-              ? timestampToSeconds(transcript[index + 1].timestamp)
+            const endTime = index < sentences.length - 1 
+              ? timestampToSeconds(sentences[index + 1].timestamp)
               : duration;
             const width = ((endTime - startTime) / duration) * 100;
             const left = (startTime / duration) * 100;
