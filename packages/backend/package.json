@@ -9,8 +9,8 @@
   "description": "Express TypeScript backend with Prisma and SQLite using ESM",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "nodemon --exec node --loader ts-node/esm src/index.ts",
+    "start": "node --experimental-specifier-resolution=node --loader ts-node/esm src/index.ts",
+    "dev": "nodemon --watch src -e ts --exec \"pnpm run start\"",
     "build": "tsc",
     "db": "prisma db push",
     "generate": "prisma generate",
