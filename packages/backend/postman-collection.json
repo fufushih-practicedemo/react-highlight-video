@@ -1,0 +1,143 @@
+{
+  "info": {
+    "name": "Video and Transcript API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Videos",
+      "item": [
+        {
+          "name": "Get all videos",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/videos"
+          }
+        },
+        {
+          "name": "Get a single video",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/videos/:id"
+          }
+        },
+        {
+          "name": "Create a new video",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/videos",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "url",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update a video",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/videos/:id",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "url",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete a video",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/videos/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transcripts",
+      "item": [
+        {
+          "name": "Get transcript for a video",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/transcripts/video/:videoId"
+          }
+        },
+        {
+          "name": "Add sentences to a transcript",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/transcripts/:id/sentences",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sentences\": [\n    {\n      \"content\": \"\",\n      \"startTime\": 0,\n      \"endTime\": 0,\n      \"isHighlight\": false\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update a sentence",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/transcripts/sentences/:id",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"\",\n  \"startTime\": 0,\n  \"endTime\": 0,\n  \"isHighlight\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete a sentence",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/transcripts/sentences/:id"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
