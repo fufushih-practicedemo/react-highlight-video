@@ -4,25 +4,13 @@ import { PrismaClient } from "../../generated/client";
 const router: Router = express.Router();
 const prisma = new PrismaClient();
 
-// Get all transcripts for a video
+// Get transcript for a video
 router.get('/video/:videoId', async (req, res) => {
   try {
     const { videoId } = req.params;
-    const transcripts = await prisma.transcript.findMany({
-      where: { videoId: Number(videoId) },
-    });
-    res.json(transcripts);
-  } catch (error) {
-    res.status(500).json({ error: 'Error fetching transcripts' });
-  }
-});
-
-// Get a single transcript
-router.get('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
     const transcript = await prisma.transcript.findUnique({
-      where: { id: Number(id) },
+      where: { videoId: Number(videoId) },
+      include: { sentences: true },
     });
     if (transcript) {
       res.json(transcript);
@@ -34,41 +22,51 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const { content, startTime, endTime, videoId } = req.body;
-    const transcript = await prisma.transcript.create({
-      data: { content, startTime, endTime, videoId: Number(videoId) },
-    });
-    res.status(201).json(transcript);
-  } catch (error) {
-    res.status(500).json({ error: 'Error creating transcript' });
-  }
-});
-
-router.put('/:id', async (req, res) => {
+// Add sentences to a transcript
+router.post('/:id/sentences', async (req, res) => {
   try {
     const { id } = req.params;
-    const { content, startTime, endTime } = req.body;
-    const transcript = await prisma.transcript.update({
+    const { sentences } = req.body;
+    const updatedTranscript = await prisma.transcript.update({
       where: { id: Number(id) },
-      data: { content, startTime, endTime },
+      data: {
+        sentences: {
+          create: sentences,
+        },
+      },
+      include: { sentences: true },
     });
-    res.json(transcript);
+    res.status(201).json(updatedTranscript);
   } catch (error) {
-    res.status(500).json({ error: 'Error updating transcript' });
+    res.status(500).json({ error: 'Error adding sentences to transcript' });
   }
 });
 
-router.delete('/:id', async (req, res) => {
+// Update a sentence
+router.put('/sentences/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    await prisma.transcript.delete({
+    const { content, startTime, endTime, isHighlight } = req.body;
+    const sentence = await prisma.sentence.update({
+      where: { id: Number(id) },
+      data: { content, startTime, endTime, isHighlight },
+    });
+    res.json(sentence);
+  } catch (error) {
+    res.status(500).json({ error: 'Error updating sentence' });
+  }
+});
+
+// Delete a sentence
+router.delete('/sentences/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.sentence.delete({
       where: { id: Number(id) },
     });
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: 'Error deleting transcript' });
+    res.status(500).json({ error: 'Error deleting sentence' });
   }
 });
 

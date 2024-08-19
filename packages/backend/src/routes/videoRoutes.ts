@@ -7,7 +7,9 @@ const prisma = new PrismaClient();
 // Get all videos
 router.get('/', async (req, res) => {
   try {
-    const videos = await prisma.video.findMany();
+    const videos = await prisma.video.findMany({
+      include: { transcript: true },
+    });
     res.json(videos);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching videos' });
@@ -20,7 +22,11 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const video = await prisma.video.findUnique({
       where: { id: Number(id) },
-      include: { transcripts: true },
+      include: { 
+        transcript: {
+          include: { sentences: true }
+        }
+      },
     });
     if (video) {
       res.json(video);
@@ -37,7 +43,14 @@ router.post('/', async (req, res) => {
   try {
     const { title, url } = req.body;
     const video = await prisma.video.create({
-      data: { title, url },
+      data: { 
+        title, 
+        url,
+        transcript: {
+          create: {} // Create an empty transcript
+        }
+      },
+      include: { transcript: true },
     });
     res.status(201).json(video);
   } catch (error) {
@@ -53,6 +66,7 @@ router.put('/:id', async (req, res) => {
     const video = await prisma.video.update({
       where: { id: Number(id) },
       data: { title, url },
+      include: { transcript: true },
     });
     res.json(video);
   } catch (error) {
