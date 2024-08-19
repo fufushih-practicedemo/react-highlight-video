@@ -1,8 +1,22 @@
 import express, { Router } from 'express';
 import { PrismaClient } from "../../generated/client";
+import multer from 'multer';
+import path from 'path';
 
 const router: Router = express.Router();
 const prisma = new PrismaClient();
+
+// Configure multer for file upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Make sure this directory exists
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // Get all videos
 router.get('/', async (req, res) => {
@@ -39,13 +53,24 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create a new video
-router.post('/', async (req, res) => {
+router.post('/', upload.single('file'), async (req, res) => {
   try {
     const { title, url } = req.body;
+    let videoUrl = url;
+
+    if (req.file) {
+      // If a file was uploaded, use its path as the URL
+      videoUrl = `/uploads/${req.file.filename}`;
+    }
+
+    if (!videoUrl) {
+      return res.status(400).json({ error: 'Either url or file must be provided' });
+    }
+
     const video = await prisma.video.create({
       data: { 
         title, 
-        url,
+        url: videoUrl,
         transcript: {
           create: {} // Create an empty transcript
         }
@@ -59,13 +84,18 @@ router.post('/', async (req, res) => {
 });
 
 // Update a video
-router.put('/:id', async (req, res) => {
+router.put('/:id', upload.single('file'), async (req, res) => {
   try {
     const { id } = req.params;
     const { title, url } = req.body;
+    const videoUrl = req.file ? `/uploads/${req.file.filename}` : url;
+
     const video = await prisma.video.update({
       where: { id: Number(id) },
-      data: { title, url },
+      data: { 
+        title, 
+        url: videoUrl 
+      },
       include: { transcript: true },
     });
     res.json(video);
