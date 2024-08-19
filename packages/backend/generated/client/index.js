@@ -160,8 +160,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:./dev.db\"\n}\n\nmodel Video {\n  id          Int          @id @default(autoincrement())\n  title       String\n  url         String\n  createdAt   DateTime     @default(now())\n  updatedAt   DateTime     @updatedAt\n  transcripts Transcript[]\n}\n\nmodel Transcript {\n  id        Int      @id @default(autoincrement())\n  content   String\n  startTime Float\n  endTime   Float\n  videoId   Int\n  video     Video    @relation(fields: [videoId], references: [id])\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
-  "inlineSchemaHash": "e512413680a7131870c3acb8b4abc41c5e8ffa7a177c4e9c4ab9000430d53d06",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/client\"\n}\n\ngenerator docs {\n  provider = \"node node_modules/prisma-docs-generator\"\n  output   = \"../generated/docs\"\n}\n\ngenerator json {\n  provider = \"prisma-json-schema-generator\"\n  output   = \"../generated/json\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:./dev.db\"\n}\n\nmodel Video {\n  id          Int          @id @default(autoincrement())\n  title       String\n  url         String\n  createdAt   DateTime     @default(now())\n  updatedAt   DateTime     @updatedAt\n  transcripts Transcript[]\n}\n\nmodel Transcript {\n  id        Int      @id @default(autoincrement())\n  content   String\n  startTime Float\n  endTime   Float\n  videoId   Int\n  video     Video    @relation(fields: [videoId], references: [id])\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
+  "inlineSchemaHash": "cbb75a7d819d31842c83599d3bdce11b12c5a6a654872ee2deea84fa7342e70a",
   "copyEngine": true
 }
 
