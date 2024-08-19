@@ -2,21 +2,42 @@ import express, { Router } from 'express';
 import { PrismaClient } from "../../generated/client";
 import multer from 'multer';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router: Router = express.Router();
 const prisma = new PrismaClient();
 
+// Ensure uploads directory exists
+const uploadPath = path.join(__dirname, '..', '..', 'uploads');
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+  console.log(`Created uploads directory at ${uploadPath}`);
+}
+
 // Configure multer for file upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Make sure this directory exists
+    console.log(`Attempting to save file to: ${uploadPath}`);
+    cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+    const uniqueFilename = Date.now() + path.extname(file.originalname);
+    console.log(`Generated filename: ${uniqueFilename}`);
+    cb(null, uniqueFilename);
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    console.log(`Received file: ${file.originalname}, mimetype: ${file.mimetype}`);
+    cb(null, true);
+  }
+});
 
 // Get all videos
 router.get('/', async (req, res) => {
@@ -74,6 +95,7 @@ router.post('/', upload.single('file'), async (req, res) => {
     });
     res.status(201).json(video);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Error creating video' });
   }
 });
