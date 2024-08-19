@@ -56,12 +56,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', upload.single('file'), async (req, res) => {
   try {
     const { title, url } = req.body;
-    let videoUrl = url;
-
-    if (req.file) {
-      // If a file was uploaded, use its path as the URL
-      videoUrl = `/uploads/${req.file.filename}`;
-    }
+    const videoUrl = req.file ? `/uploads/${req.file.filename}` : url;
 
     if (!videoUrl) {
       return res.status(400).json({ error: 'Either url or file must be provided' });
