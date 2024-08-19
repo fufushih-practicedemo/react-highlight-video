@@ -23,6 +23,11 @@ export type Video = $Result.DefaultSelection<Prisma.$VideoPayload>
  * 
  */
 export type Transcript = $Result.DefaultSelection<Prisma.$TranscriptPayload>
+/**
+ * Model Sentence
+ * 
+ */
+export type Sentence = $Result.DefaultSelection<Prisma.$SentencePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -165,6 +170,16 @@ export class PrismaClient<
     * ```
     */
   get transcript(): Prisma.TranscriptDelegate<ExtArgs>;
+
+  /**
+   * `prisma.sentence`: Exposes CRUD operations for the **Sentence** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Sentences
+    * const sentences = await prisma.sentence.findMany()
+    * ```
+    */
+  get sentence(): Prisma.SentenceDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -643,7 +658,8 @@ export namespace Prisma {
 
   export const ModelName: {
     Video: 'Video',
-    Transcript: 'Transcript'
+    Transcript: 'Transcript',
+    Sentence: 'Sentence'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -659,7 +675,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "video" | "transcript"
+      modelProps: "video" | "transcript" | "sentence"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -800,6 +816,76 @@ export namespace Prisma {
           count: {
             args: Prisma.TranscriptCountArgs<ExtArgs>
             result: $Utils.Optional<TranscriptCountAggregateOutputType> | number
+          }
+        }
+      }
+      Sentence: {
+        payload: Prisma.$SentencePayload<ExtArgs>
+        fields: Prisma.SentenceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SentenceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SentenceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload>
+          }
+          findFirst: {
+            args: Prisma.SentenceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SentenceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload>
+          }
+          findMany: {
+            args: Prisma.SentenceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload>[]
+          }
+          create: {
+            args: Prisma.SentenceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload>
+          }
+          createMany: {
+            args: Prisma.SentenceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SentenceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload>[]
+          }
+          delete: {
+            args: Prisma.SentenceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload>
+          }
+          update: {
+            args: Prisma.SentenceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload>
+          }
+          deleteMany: {
+            args: Prisma.SentenceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SentenceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SentenceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SentencePayload>
+          }
+          aggregate: {
+            args: Prisma.SentenceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSentence>
+          }
+          groupBy: {
+            args: Prisma.SentenceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SentenceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SentenceCountArgs<ExtArgs>
+            result: $Utils.Optional<SentenceCountAggregateOutputType> | number
           }
         }
       }
@@ -960,33 +1046,33 @@ export namespace Prisma {
 
 
   /**
-   * Count Type VideoCountOutputType
+   * Count Type TranscriptCountOutputType
    */
 
-  export type VideoCountOutputType = {
-    transcripts: number
+  export type TranscriptCountOutputType = {
+    sentences: number
   }
 
-  export type VideoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transcripts?: boolean | VideoCountOutputTypeCountTranscriptsArgs
+  export type TranscriptCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sentences?: boolean | TranscriptCountOutputTypeCountSentencesArgs
   }
 
   // Custom InputTypes
   /**
-   * VideoCountOutputType without action
+   * TranscriptCountOutputType without action
    */
-  export type VideoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TranscriptCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoCountOutputType
+     * Select specific fields to fetch from the TranscriptCountOutputType
      */
-    select?: VideoCountOutputTypeSelect<ExtArgs> | null
+    select?: TranscriptCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * VideoCountOutputType without action
+   * TranscriptCountOutputType without action
    */
-  export type VideoCountOutputTypeCountTranscriptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TranscriptWhereInput
+  export type TranscriptCountOutputTypeCountSentencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SentenceWhereInput
   }
 
 
@@ -1192,8 +1278,7 @@ export namespace Prisma {
     url?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    transcripts?: boolean | Video$transcriptsArgs<ExtArgs>
-    _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
+    transcript?: boolean | Video$transcriptArgs<ExtArgs>
   }, ExtArgs["result"]["video"]>
 
   export type VideoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1213,15 +1298,14 @@ export namespace Prisma {
   }
 
   export type VideoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transcripts?: boolean | Video$transcriptsArgs<ExtArgs>
-    _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
+    transcript?: boolean | Video$transcriptArgs<ExtArgs>
   }
   export type VideoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $VideoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Video"
     objects: {
-      transcripts: Prisma.$TranscriptPayload<ExtArgs>[]
+      transcript: Prisma.$TranscriptPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1593,7 +1677,7 @@ export namespace Prisma {
    */
   export interface Prisma__VideoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    transcripts<T extends Video$transcriptsArgs<ExtArgs> = {}>(args?: Subset<T, Video$transcriptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranscriptPayload<ExtArgs>, T, "findMany"> | Null>
+    transcript<T extends Video$transcriptArgs<ExtArgs> = {}>(args?: Subset<T, Video$transcriptArgs<ExtArgs>>): Prisma__TranscriptClient<$Result.GetResult<Prisma.$TranscriptPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1940,9 +2024,9 @@ export namespace Prisma {
   }
 
   /**
-   * Video.transcripts
+   * Video.transcript
    */
-  export type Video$transcriptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Video$transcriptArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Transcript
      */
@@ -1952,11 +2036,6 @@ export namespace Prisma {
      */
     include?: TranscriptInclude<ExtArgs> | null
     where?: TranscriptWhereInput
-    orderBy?: TranscriptOrderByWithRelationInput | TranscriptOrderByWithRelationInput[]
-    cursor?: TranscriptWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TranscriptScalarFieldEnum | TranscriptScalarFieldEnum[]
   }
 
   /**
@@ -1988,23 +2067,16 @@ export namespace Prisma {
 
   export type TranscriptAvgAggregateOutputType = {
     id: number | null
-    startTime: number | null
-    endTime: number | null
     videoId: number | null
   }
 
   export type TranscriptSumAggregateOutputType = {
     id: number | null
-    startTime: number | null
-    endTime: number | null
     videoId: number | null
   }
 
   export type TranscriptMinAggregateOutputType = {
     id: number | null
-    content: string | null
-    startTime: number | null
-    endTime: number | null
     videoId: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2012,9 +2084,6 @@ export namespace Prisma {
 
   export type TranscriptMaxAggregateOutputType = {
     id: number | null
-    content: string | null
-    startTime: number | null
-    endTime: number | null
     videoId: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2022,9 +2091,6 @@ export namespace Prisma {
 
   export type TranscriptCountAggregateOutputType = {
     id: number
-    content: number
-    startTime: number
-    endTime: number
     videoId: number
     createdAt: number
     updatedAt: number
@@ -2034,23 +2100,16 @@ export namespace Prisma {
 
   export type TranscriptAvgAggregateInputType = {
     id?: true
-    startTime?: true
-    endTime?: true
     videoId?: true
   }
 
   export type TranscriptSumAggregateInputType = {
     id?: true
-    startTime?: true
-    endTime?: true
     videoId?: true
   }
 
   export type TranscriptMinAggregateInputType = {
     id?: true
-    content?: true
-    startTime?: true
-    endTime?: true
     videoId?: true
     createdAt?: true
     updatedAt?: true
@@ -2058,9 +2117,6 @@ export namespace Prisma {
 
   export type TranscriptMaxAggregateInputType = {
     id?: true
-    content?: true
-    startTime?: true
-    endTime?: true
     videoId?: true
     createdAt?: true
     updatedAt?: true
@@ -2068,9 +2124,6 @@ export namespace Prisma {
 
   export type TranscriptCountAggregateInputType = {
     id?: true
-    content?: true
-    startTime?: true
-    endTime?: true
     videoId?: true
     createdAt?: true
     updatedAt?: true
@@ -2165,9 +2218,6 @@ export namespace Prisma {
 
   export type TranscriptGroupByOutputType = {
     id: number
-    content: string
-    startTime: number
-    endTime: number
     videoId: number
     createdAt: Date
     updatedAt: Date
@@ -2194,20 +2244,16 @@ export namespace Prisma {
 
   export type TranscriptSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    content?: boolean
-    startTime?: boolean
-    endTime?: boolean
     videoId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     video?: boolean | VideoDefaultArgs<ExtArgs>
+    sentences?: boolean | Transcript$sentencesArgs<ExtArgs>
+    _count?: boolean | TranscriptCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transcript"]>
 
   export type TranscriptSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    content?: boolean
-    startTime?: boolean
-    endTime?: boolean
     videoId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2216,9 +2262,6 @@ export namespace Prisma {
 
   export type TranscriptSelectScalar = {
     id?: boolean
-    content?: boolean
-    startTime?: boolean
-    endTime?: boolean
     videoId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2226,6 +2269,8 @@ export namespace Prisma {
 
   export type TranscriptInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     video?: boolean | VideoDefaultArgs<ExtArgs>
+    sentences?: boolean | Transcript$sentencesArgs<ExtArgs>
+    _count?: boolean | TranscriptCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TranscriptIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     video?: boolean | VideoDefaultArgs<ExtArgs>
@@ -2235,12 +2280,10 @@ export namespace Prisma {
     name: "Transcript"
     objects: {
       video: Prisma.$VideoPayload<ExtArgs>
+      sentences: Prisma.$SentencePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      content: string
-      startTime: number
-      endTime: number
       videoId: number
       createdAt: Date
       updatedAt: Date
@@ -2609,6 +2652,7 @@ export namespace Prisma {
   export interface Prisma__TranscriptClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     video<T extends VideoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoDefaultArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    sentences<T extends Transcript$sentencesArgs<ExtArgs> = {}>(args?: Subset<T, Transcript$sentencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2639,9 +2683,6 @@ export namespace Prisma {
    */ 
   interface TranscriptFieldRefs {
     readonly id: FieldRef<"Transcript", 'Int'>
-    readonly content: FieldRef<"Transcript", 'String'>
-    readonly startTime: FieldRef<"Transcript", 'Float'>
-    readonly endTime: FieldRef<"Transcript", 'Float'>
     readonly videoId: FieldRef<"Transcript", 'Int'>
     readonly createdAt: FieldRef<"Transcript", 'DateTime'>
     readonly updatedAt: FieldRef<"Transcript", 'DateTime'>
@@ -2961,6 +3002,26 @@ export namespace Prisma {
   }
 
   /**
+   * Transcript.sentences
+   */
+  export type Transcript$sentencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    where?: SentenceWhereInput
+    orderBy?: SentenceOrderByWithRelationInput | SentenceOrderByWithRelationInput[]
+    cursor?: SentenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SentenceScalarFieldEnum | SentenceScalarFieldEnum[]
+  }
+
+  /**
    * Transcript without action
    */
   export type TranscriptDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2972,6 +3033,1019 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TranscriptInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Sentence
+   */
+
+  export type AggregateSentence = {
+    _count: SentenceCountAggregateOutputType | null
+    _avg: SentenceAvgAggregateOutputType | null
+    _sum: SentenceSumAggregateOutputType | null
+    _min: SentenceMinAggregateOutputType | null
+    _max: SentenceMaxAggregateOutputType | null
+  }
+
+  export type SentenceAvgAggregateOutputType = {
+    id: number | null
+    startTime: number | null
+    endTime: number | null
+    transcriptId: number | null
+  }
+
+  export type SentenceSumAggregateOutputType = {
+    id: number | null
+    startTime: number | null
+    endTime: number | null
+    transcriptId: number | null
+  }
+
+  export type SentenceMinAggregateOutputType = {
+    id: number | null
+    content: string | null
+    startTime: number | null
+    endTime: number | null
+    isHighlight: boolean | null
+    transcriptId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SentenceMaxAggregateOutputType = {
+    id: number | null
+    content: string | null
+    startTime: number | null
+    endTime: number | null
+    isHighlight: boolean | null
+    transcriptId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SentenceCountAggregateOutputType = {
+    id: number
+    content: number
+    startTime: number
+    endTime: number
+    isHighlight: number
+    transcriptId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SentenceAvgAggregateInputType = {
+    id?: true
+    startTime?: true
+    endTime?: true
+    transcriptId?: true
+  }
+
+  export type SentenceSumAggregateInputType = {
+    id?: true
+    startTime?: true
+    endTime?: true
+    transcriptId?: true
+  }
+
+  export type SentenceMinAggregateInputType = {
+    id?: true
+    content?: true
+    startTime?: true
+    endTime?: true
+    isHighlight?: true
+    transcriptId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SentenceMaxAggregateInputType = {
+    id?: true
+    content?: true
+    startTime?: true
+    endTime?: true
+    isHighlight?: true
+    transcriptId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SentenceCountAggregateInputType = {
+    id?: true
+    content?: true
+    startTime?: true
+    endTime?: true
+    isHighlight?: true
+    transcriptId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SentenceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sentence to aggregate.
+     */
+    where?: SentenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sentences to fetch.
+     */
+    orderBy?: SentenceOrderByWithRelationInput | SentenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SentenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sentences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sentences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Sentences
+    **/
+    _count?: true | SentenceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SentenceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SentenceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SentenceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SentenceMaxAggregateInputType
+  }
+
+  export type GetSentenceAggregateType<T extends SentenceAggregateArgs> = {
+        [P in keyof T & keyof AggregateSentence]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSentence[P]>
+      : GetScalarType<T[P], AggregateSentence[P]>
+  }
+
+
+
+
+  export type SentenceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SentenceWhereInput
+    orderBy?: SentenceOrderByWithAggregationInput | SentenceOrderByWithAggregationInput[]
+    by: SentenceScalarFieldEnum[] | SentenceScalarFieldEnum
+    having?: SentenceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SentenceCountAggregateInputType | true
+    _avg?: SentenceAvgAggregateInputType
+    _sum?: SentenceSumAggregateInputType
+    _min?: SentenceMinAggregateInputType
+    _max?: SentenceMaxAggregateInputType
+  }
+
+  export type SentenceGroupByOutputType = {
+    id: number
+    content: string
+    startTime: number
+    endTime: number
+    isHighlight: boolean
+    transcriptId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: SentenceCountAggregateOutputType | null
+    _avg: SentenceAvgAggregateOutputType | null
+    _sum: SentenceSumAggregateOutputType | null
+    _min: SentenceMinAggregateOutputType | null
+    _max: SentenceMaxAggregateOutputType | null
+  }
+
+  type GetSentenceGroupByPayload<T extends SentenceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SentenceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SentenceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SentenceGroupByOutputType[P]>
+            : GetScalarType<T[P], SentenceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SentenceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    content?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    isHighlight?: boolean
+    transcriptId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    transcript?: boolean | TranscriptDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sentence"]>
+
+  export type SentenceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    content?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    isHighlight?: boolean
+    transcriptId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    transcript?: boolean | TranscriptDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sentence"]>
+
+  export type SentenceSelectScalar = {
+    id?: boolean
+    content?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    isHighlight?: boolean
+    transcriptId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SentenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transcript?: boolean | TranscriptDefaultArgs<ExtArgs>
+  }
+  export type SentenceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transcript?: boolean | TranscriptDefaultArgs<ExtArgs>
+  }
+
+  export type $SentencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Sentence"
+    objects: {
+      transcript: Prisma.$TranscriptPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      content: string
+      startTime: number
+      endTime: number
+      isHighlight: boolean
+      transcriptId: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["sentence"]>
+    composites: {}
+  }
+
+  type SentenceGetPayload<S extends boolean | null | undefined | SentenceDefaultArgs> = $Result.GetResult<Prisma.$SentencePayload, S>
+
+  type SentenceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SentenceFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SentenceCountAggregateInputType | true
+    }
+
+  export interface SentenceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Sentence'], meta: { name: 'Sentence' } }
+    /**
+     * Find zero or one Sentence that matches the filter.
+     * @param {SentenceFindUniqueArgs} args - Arguments to find a Sentence
+     * @example
+     * // Get one Sentence
+     * const sentence = await prisma.sentence.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SentenceFindUniqueArgs>(args: SelectSubset<T, SentenceFindUniqueArgs<ExtArgs>>): Prisma__SentenceClient<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Sentence that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SentenceFindUniqueOrThrowArgs} args - Arguments to find a Sentence
+     * @example
+     * // Get one Sentence
+     * const sentence = await prisma.sentence.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SentenceFindUniqueOrThrowArgs>(args: SelectSubset<T, SentenceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SentenceClient<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Sentence that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SentenceFindFirstArgs} args - Arguments to find a Sentence
+     * @example
+     * // Get one Sentence
+     * const sentence = await prisma.sentence.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SentenceFindFirstArgs>(args?: SelectSubset<T, SentenceFindFirstArgs<ExtArgs>>): Prisma__SentenceClient<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Sentence that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SentenceFindFirstOrThrowArgs} args - Arguments to find a Sentence
+     * @example
+     * // Get one Sentence
+     * const sentence = await prisma.sentence.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SentenceFindFirstOrThrowArgs>(args?: SelectSubset<T, SentenceFindFirstOrThrowArgs<ExtArgs>>): Prisma__SentenceClient<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Sentences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SentenceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Sentences
+     * const sentences = await prisma.sentence.findMany()
+     * 
+     * // Get first 10 Sentences
+     * const sentences = await prisma.sentence.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sentenceWithIdOnly = await prisma.sentence.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SentenceFindManyArgs>(args?: SelectSubset<T, SentenceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Sentence.
+     * @param {SentenceCreateArgs} args - Arguments to create a Sentence.
+     * @example
+     * // Create one Sentence
+     * const Sentence = await prisma.sentence.create({
+     *   data: {
+     *     // ... data to create a Sentence
+     *   }
+     * })
+     * 
+     */
+    create<T extends SentenceCreateArgs>(args: SelectSubset<T, SentenceCreateArgs<ExtArgs>>): Prisma__SentenceClient<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Sentences.
+     * @param {SentenceCreateManyArgs} args - Arguments to create many Sentences.
+     * @example
+     * // Create many Sentences
+     * const sentence = await prisma.sentence.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SentenceCreateManyArgs>(args?: SelectSubset<T, SentenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Sentences and returns the data saved in the database.
+     * @param {SentenceCreateManyAndReturnArgs} args - Arguments to create many Sentences.
+     * @example
+     * // Create many Sentences
+     * const sentence = await prisma.sentence.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Sentences and only return the `id`
+     * const sentenceWithIdOnly = await prisma.sentence.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SentenceCreateManyAndReturnArgs>(args?: SelectSubset<T, SentenceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Sentence.
+     * @param {SentenceDeleteArgs} args - Arguments to delete one Sentence.
+     * @example
+     * // Delete one Sentence
+     * const Sentence = await prisma.sentence.delete({
+     *   where: {
+     *     // ... filter to delete one Sentence
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SentenceDeleteArgs>(args: SelectSubset<T, SentenceDeleteArgs<ExtArgs>>): Prisma__SentenceClient<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Sentence.
+     * @param {SentenceUpdateArgs} args - Arguments to update one Sentence.
+     * @example
+     * // Update one Sentence
+     * const sentence = await prisma.sentence.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SentenceUpdateArgs>(args: SelectSubset<T, SentenceUpdateArgs<ExtArgs>>): Prisma__SentenceClient<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Sentences.
+     * @param {SentenceDeleteManyArgs} args - Arguments to filter Sentences to delete.
+     * @example
+     * // Delete a few Sentences
+     * const { count } = await prisma.sentence.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SentenceDeleteManyArgs>(args?: SelectSubset<T, SentenceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sentences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SentenceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Sentences
+     * const sentence = await prisma.sentence.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SentenceUpdateManyArgs>(args: SelectSubset<T, SentenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Sentence.
+     * @param {SentenceUpsertArgs} args - Arguments to update or create a Sentence.
+     * @example
+     * // Update or create a Sentence
+     * const sentence = await prisma.sentence.upsert({
+     *   create: {
+     *     // ... data to create a Sentence
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Sentence we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SentenceUpsertArgs>(args: SelectSubset<T, SentenceUpsertArgs<ExtArgs>>): Prisma__SentenceClient<$Result.GetResult<Prisma.$SentencePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Sentences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SentenceCountArgs} args - Arguments to filter Sentences to count.
+     * @example
+     * // Count the number of Sentences
+     * const count = await prisma.sentence.count({
+     *   where: {
+     *     // ... the filter for the Sentences we want to count
+     *   }
+     * })
+    **/
+    count<T extends SentenceCountArgs>(
+      args?: Subset<T, SentenceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SentenceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Sentence.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SentenceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SentenceAggregateArgs>(args: Subset<T, SentenceAggregateArgs>): Prisma.PrismaPromise<GetSentenceAggregateType<T>>
+
+    /**
+     * Group by Sentence.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SentenceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SentenceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SentenceGroupByArgs['orderBy'] }
+        : { orderBy?: SentenceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SentenceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSentenceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Sentence model
+   */
+  readonly fields: SentenceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Sentence.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SentenceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    transcript<T extends TranscriptDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TranscriptDefaultArgs<ExtArgs>>): Prisma__TranscriptClient<$Result.GetResult<Prisma.$TranscriptPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Sentence model
+   */ 
+  interface SentenceFieldRefs {
+    readonly id: FieldRef<"Sentence", 'Int'>
+    readonly content: FieldRef<"Sentence", 'String'>
+    readonly startTime: FieldRef<"Sentence", 'Float'>
+    readonly endTime: FieldRef<"Sentence", 'Float'>
+    readonly isHighlight: FieldRef<"Sentence", 'Boolean'>
+    readonly transcriptId: FieldRef<"Sentence", 'Int'>
+    readonly createdAt: FieldRef<"Sentence", 'DateTime'>
+    readonly updatedAt: FieldRef<"Sentence", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Sentence findUnique
+   */
+  export type SentenceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Sentence to fetch.
+     */
+    where: SentenceWhereUniqueInput
+  }
+
+  /**
+   * Sentence findUniqueOrThrow
+   */
+  export type SentenceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Sentence to fetch.
+     */
+    where: SentenceWhereUniqueInput
+  }
+
+  /**
+   * Sentence findFirst
+   */
+  export type SentenceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Sentence to fetch.
+     */
+    where?: SentenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sentences to fetch.
+     */
+    orderBy?: SentenceOrderByWithRelationInput | SentenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sentences.
+     */
+    cursor?: SentenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sentences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sentences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sentences.
+     */
+    distinct?: SentenceScalarFieldEnum | SentenceScalarFieldEnum[]
+  }
+
+  /**
+   * Sentence findFirstOrThrow
+   */
+  export type SentenceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Sentence to fetch.
+     */
+    where?: SentenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sentences to fetch.
+     */
+    orderBy?: SentenceOrderByWithRelationInput | SentenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sentences.
+     */
+    cursor?: SentenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sentences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sentences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sentences.
+     */
+    distinct?: SentenceScalarFieldEnum | SentenceScalarFieldEnum[]
+  }
+
+  /**
+   * Sentence findMany
+   */
+  export type SentenceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * Filter, which Sentences to fetch.
+     */
+    where?: SentenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sentences to fetch.
+     */
+    orderBy?: SentenceOrderByWithRelationInput | SentenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Sentences.
+     */
+    cursor?: SentenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sentences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sentences.
+     */
+    skip?: number
+    distinct?: SentenceScalarFieldEnum | SentenceScalarFieldEnum[]
+  }
+
+  /**
+   * Sentence create
+   */
+  export type SentenceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Sentence.
+     */
+    data: XOR<SentenceCreateInput, SentenceUncheckedCreateInput>
+  }
+
+  /**
+   * Sentence createMany
+   */
+  export type SentenceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Sentences.
+     */
+    data: SentenceCreateManyInput | SentenceCreateManyInput[]
+  }
+
+  /**
+   * Sentence createManyAndReturn
+   */
+  export type SentenceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Sentences.
+     */
+    data: SentenceCreateManyInput | SentenceCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Sentence update
+   */
+  export type SentenceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Sentence.
+     */
+    data: XOR<SentenceUpdateInput, SentenceUncheckedUpdateInput>
+    /**
+     * Choose, which Sentence to update.
+     */
+    where: SentenceWhereUniqueInput
+  }
+
+  /**
+   * Sentence updateMany
+   */
+  export type SentenceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Sentences.
+     */
+    data: XOR<SentenceUpdateManyMutationInput, SentenceUncheckedUpdateManyInput>
+    /**
+     * Filter which Sentences to update
+     */
+    where?: SentenceWhereInput
+  }
+
+  /**
+   * Sentence upsert
+   */
+  export type SentenceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Sentence to update in case it exists.
+     */
+    where: SentenceWhereUniqueInput
+    /**
+     * In case the Sentence found by the `where` argument doesn't exist, create a new Sentence with this data.
+     */
+    create: XOR<SentenceCreateInput, SentenceUncheckedCreateInput>
+    /**
+     * In case the Sentence was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SentenceUpdateInput, SentenceUncheckedUpdateInput>
+  }
+
+  /**
+   * Sentence delete
+   */
+  export type SentenceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
+    /**
+     * Filter which Sentence to delete.
+     */
+    where: SentenceWhereUniqueInput
+  }
+
+  /**
+   * Sentence deleteMany
+   */
+  export type SentenceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sentences to delete
+     */
+    where?: SentenceWhereInput
+  }
+
+  /**
+   * Sentence without action
+   */
+  export type SentenceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sentence
+     */
+    select?: SentenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SentenceInclude<ExtArgs> | null
   }
 
 
@@ -2999,15 +4073,26 @@ export namespace Prisma {
 
   export const TranscriptScalarFieldEnum: {
     id: 'id',
-    content: 'content',
-    startTime: 'startTime',
-    endTime: 'endTime',
     videoId: 'videoId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type TranscriptScalarFieldEnum = (typeof TranscriptScalarFieldEnum)[keyof typeof TranscriptScalarFieldEnum]
+
+
+  export const SentenceScalarFieldEnum: {
+    id: 'id',
+    content: 'content',
+    startTime: 'startTime',
+    endTime: 'endTime',
+    isHighlight: 'isHighlight',
+    transcriptId: 'transcriptId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SentenceScalarFieldEnum = (typeof SentenceScalarFieldEnum)[keyof typeof SentenceScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3049,6 +4134,13 @@ export namespace Prisma {
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
   /**
    * Deep Input Types
    */
@@ -3063,7 +4155,7 @@ export namespace Prisma {
     url?: StringFilter<"Video"> | string
     createdAt?: DateTimeFilter<"Video"> | Date | string
     updatedAt?: DateTimeFilter<"Video"> | Date | string
-    transcripts?: TranscriptListRelationFilter
+    transcript?: XOR<TranscriptNullableRelationFilter, TranscriptWhereInput> | null
   }
 
   export type VideoOrderByWithRelationInput = {
@@ -3072,7 +4164,7 @@ export namespace Prisma {
     url?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    transcripts?: TranscriptOrderByRelationAggregateInput
+    transcript?: TranscriptOrderByWithRelationInput
   }
 
   export type VideoWhereUniqueInput = Prisma.AtLeast<{
@@ -3084,7 +4176,7 @@ export namespace Prisma {
     url?: StringFilter<"Video"> | string
     createdAt?: DateTimeFilter<"Video"> | Date | string
     updatedAt?: DateTimeFilter<"Video"> | Date | string
-    transcripts?: TranscriptListRelationFilter
+    transcript?: XOR<TranscriptNullableRelationFilter, TranscriptWhereInput> | null
   }, "id">
 
   export type VideoOrderByWithAggregationInput = {
@@ -3116,45 +4208,36 @@ export namespace Prisma {
     OR?: TranscriptWhereInput[]
     NOT?: TranscriptWhereInput | TranscriptWhereInput[]
     id?: IntFilter<"Transcript"> | number
-    content?: StringFilter<"Transcript"> | string
-    startTime?: FloatFilter<"Transcript"> | number
-    endTime?: FloatFilter<"Transcript"> | number
     videoId?: IntFilter<"Transcript"> | number
     createdAt?: DateTimeFilter<"Transcript"> | Date | string
     updatedAt?: DateTimeFilter<"Transcript"> | Date | string
     video?: XOR<VideoRelationFilter, VideoWhereInput>
+    sentences?: SentenceListRelationFilter
   }
 
   export type TranscriptOrderByWithRelationInput = {
     id?: SortOrder
-    content?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
     videoId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     video?: VideoOrderByWithRelationInput
+    sentences?: SentenceOrderByRelationAggregateInput
   }
 
   export type TranscriptWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    videoId?: number
     AND?: TranscriptWhereInput | TranscriptWhereInput[]
     OR?: TranscriptWhereInput[]
     NOT?: TranscriptWhereInput | TranscriptWhereInput[]
-    content?: StringFilter<"Transcript"> | string
-    startTime?: FloatFilter<"Transcript"> | number
-    endTime?: FloatFilter<"Transcript"> | number
-    videoId?: IntFilter<"Transcript"> | number
     createdAt?: DateTimeFilter<"Transcript"> | Date | string
     updatedAt?: DateTimeFilter<"Transcript"> | Date | string
     video?: XOR<VideoRelationFilter, VideoWhereInput>
-  }, "id">
+    sentences?: SentenceListRelationFilter
+  }, "id" | "videoId">
 
   export type TranscriptOrderByWithAggregationInput = {
     id?: SortOrder
-    content?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
     videoId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -3170,12 +4253,81 @@ export namespace Prisma {
     OR?: TranscriptScalarWhereWithAggregatesInput[]
     NOT?: TranscriptScalarWhereWithAggregatesInput | TranscriptScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Transcript"> | number
-    content?: StringWithAggregatesFilter<"Transcript"> | string
-    startTime?: FloatWithAggregatesFilter<"Transcript"> | number
-    endTime?: FloatWithAggregatesFilter<"Transcript"> | number
     videoId?: IntWithAggregatesFilter<"Transcript"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Transcript"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Transcript"> | Date | string
+  }
+
+  export type SentenceWhereInput = {
+    AND?: SentenceWhereInput | SentenceWhereInput[]
+    OR?: SentenceWhereInput[]
+    NOT?: SentenceWhereInput | SentenceWhereInput[]
+    id?: IntFilter<"Sentence"> | number
+    content?: StringFilter<"Sentence"> | string
+    startTime?: FloatFilter<"Sentence"> | number
+    endTime?: FloatFilter<"Sentence"> | number
+    isHighlight?: BoolFilter<"Sentence"> | boolean
+    transcriptId?: IntFilter<"Sentence"> | number
+    createdAt?: DateTimeFilter<"Sentence"> | Date | string
+    updatedAt?: DateTimeFilter<"Sentence"> | Date | string
+    transcript?: XOR<TranscriptRelationFilter, TranscriptWhereInput>
+  }
+
+  export type SentenceOrderByWithRelationInput = {
+    id?: SortOrder
+    content?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    isHighlight?: SortOrder
+    transcriptId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    transcript?: TranscriptOrderByWithRelationInput
+  }
+
+  export type SentenceWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SentenceWhereInput | SentenceWhereInput[]
+    OR?: SentenceWhereInput[]
+    NOT?: SentenceWhereInput | SentenceWhereInput[]
+    content?: StringFilter<"Sentence"> | string
+    startTime?: FloatFilter<"Sentence"> | number
+    endTime?: FloatFilter<"Sentence"> | number
+    isHighlight?: BoolFilter<"Sentence"> | boolean
+    transcriptId?: IntFilter<"Sentence"> | number
+    createdAt?: DateTimeFilter<"Sentence"> | Date | string
+    updatedAt?: DateTimeFilter<"Sentence"> | Date | string
+    transcript?: XOR<TranscriptRelationFilter, TranscriptWhereInput>
+  }, "id">
+
+  export type SentenceOrderByWithAggregationInput = {
+    id?: SortOrder
+    content?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    isHighlight?: SortOrder
+    transcriptId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SentenceCountOrderByAggregateInput
+    _avg?: SentenceAvgOrderByAggregateInput
+    _max?: SentenceMaxOrderByAggregateInput
+    _min?: SentenceMinOrderByAggregateInput
+    _sum?: SentenceSumOrderByAggregateInput
+  }
+
+  export type SentenceScalarWhereWithAggregatesInput = {
+    AND?: SentenceScalarWhereWithAggregatesInput | SentenceScalarWhereWithAggregatesInput[]
+    OR?: SentenceScalarWhereWithAggregatesInput[]
+    NOT?: SentenceScalarWhereWithAggregatesInput | SentenceScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Sentence"> | number
+    content?: StringWithAggregatesFilter<"Sentence"> | string
+    startTime?: FloatWithAggregatesFilter<"Sentence"> | number
+    endTime?: FloatWithAggregatesFilter<"Sentence"> | number
+    isHighlight?: BoolWithAggregatesFilter<"Sentence"> | boolean
+    transcriptId?: IntWithAggregatesFilter<"Sentence"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Sentence"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Sentence"> | Date | string
   }
 
   export type VideoCreateInput = {
@@ -3183,7 +4335,7 @@ export namespace Prisma {
     url: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    transcripts?: TranscriptCreateNestedManyWithoutVideoInput
+    transcript?: TranscriptCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUncheckedCreateInput = {
@@ -3192,7 +4344,7 @@ export namespace Prisma {
     url: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    transcripts?: TranscriptUncheckedCreateNestedManyWithoutVideoInput
+    transcript?: TranscriptUncheckedCreateNestedOneWithoutVideoInput
   }
 
   export type VideoUpdateInput = {
@@ -3200,7 +4352,7 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    transcripts?: TranscriptUpdateManyWithoutVideoNestedInput
+    transcript?: TranscriptUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoUncheckedUpdateInput = {
@@ -3209,7 +4361,7 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    transcripts?: TranscriptUncheckedUpdateManyWithoutVideoNestedInput
+    transcript?: TranscriptUncheckedUpdateOneWithoutVideoNestedInput
   }
 
   export type VideoCreateManyInput = {
@@ -3236,67 +4388,123 @@ export namespace Prisma {
   }
 
   export type TranscriptCreateInput = {
-    content: string
-    startTime: number
-    endTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    video: VideoCreateNestedOneWithoutTranscriptsInput
+    video: VideoCreateNestedOneWithoutTranscriptInput
+    sentences?: SentenceCreateNestedManyWithoutTranscriptInput
   }
 
   export type TranscriptUncheckedCreateInput = {
     id?: number
-    content: string
-    startTime: number
-    endTime: number
     videoId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    sentences?: SentenceUncheckedCreateNestedManyWithoutTranscriptInput
   }
 
   export type TranscriptUpdateInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    startTime?: FloatFieldUpdateOperationsInput | number
-    endTime?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    video?: VideoUpdateOneRequiredWithoutTranscriptsNestedInput
+    video?: VideoUpdateOneRequiredWithoutTranscriptNestedInput
+    sentences?: SentenceUpdateManyWithoutTranscriptNestedInput
   }
 
   export type TranscriptUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    startTime?: FloatFieldUpdateOperationsInput | number
-    endTime?: FloatFieldUpdateOperationsInput | number
     videoId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentences?: SentenceUncheckedUpdateManyWithoutTranscriptNestedInput
   }
 
   export type TranscriptCreateManyInput = {
     id?: number
-    content: string
-    startTime: number
-    endTime: number
     videoId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TranscriptUpdateManyMutationInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    startTime?: FloatFieldUpdateOperationsInput | number
-    endTime?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TranscriptUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SentenceCreateInput = {
+    content: string
+    startTime: number
+    endTime: number
+    isHighlight?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transcript: TranscriptCreateNestedOneWithoutSentencesInput
+  }
+
+  export type SentenceUncheckedCreateInput = {
+    id?: number
+    content: string
+    startTime: number
+    endTime: number
+    isHighlight?: boolean
+    transcriptId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SentenceUpdateInput = {
     content?: StringFieldUpdateOperationsInput | string
     startTime?: FloatFieldUpdateOperationsInput | number
     endTime?: FloatFieldUpdateOperationsInput | number
-    videoId?: IntFieldUpdateOperationsInput | number
+    isHighlight?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transcript?: TranscriptUpdateOneRequiredWithoutSentencesNestedInput
+  }
+
+  export type SentenceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    startTime?: FloatFieldUpdateOperationsInput | number
+    endTime?: FloatFieldUpdateOperationsInput | number
+    isHighlight?: BoolFieldUpdateOperationsInput | boolean
+    transcriptId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SentenceCreateManyInput = {
+    id?: number
+    content: string
+    startTime: number
+    endTime: number
+    isHighlight?: boolean
+    transcriptId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SentenceUpdateManyMutationInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    startTime?: FloatFieldUpdateOperationsInput | number
+    endTime?: FloatFieldUpdateOperationsInput | number
+    isHighlight?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SentenceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    startTime?: FloatFieldUpdateOperationsInput | number
+    endTime?: FloatFieldUpdateOperationsInput | number
+    isHighlight?: BoolFieldUpdateOperationsInput | boolean
+    transcriptId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3337,14 +4545,9 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type TranscriptListRelationFilter = {
-    every?: TranscriptWhereInput
-    some?: TranscriptWhereInput
-    none?: TranscriptWhereInput
-  }
-
-  export type TranscriptOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type TranscriptNullableRelationFilter = {
+    is?: TranscriptWhereInput | null
+    isNot?: TranscriptWhereInput | null
   }
 
   export type VideoCountOrderByAggregateInput = {
@@ -3426,6 +4629,52 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type VideoRelationFilter = {
+    is?: VideoWhereInput
+    isNot?: VideoWhereInput
+  }
+
+  export type SentenceListRelationFilter = {
+    every?: SentenceWhereInput
+    some?: SentenceWhereInput
+    none?: SentenceWhereInput
+  }
+
+  export type SentenceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TranscriptCountOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TranscriptAvgOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+  }
+
+  export type TranscriptMaxOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TranscriptMinOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TranscriptSumOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+  }
+
   export type FloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[]
@@ -3437,53 +4686,61 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type VideoRelationFilter = {
-    is?: VideoWhereInput
-    isNot?: VideoWhereInput
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type TranscriptCountOrderByAggregateInput = {
+  export type TranscriptRelationFilter = {
+    is?: TranscriptWhereInput
+    isNot?: TranscriptWhereInput
+  }
+
+  export type SentenceCountOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    videoId?: SortOrder
+    isHighlight?: SortOrder
+    transcriptId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TranscriptAvgOrderByAggregateInput = {
+  export type SentenceAvgOrderByAggregateInput = {
     id?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    videoId?: SortOrder
+    transcriptId?: SortOrder
   }
 
-  export type TranscriptMaxOrderByAggregateInput = {
+  export type SentenceMaxOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    videoId?: SortOrder
+    isHighlight?: SortOrder
+    transcriptId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TranscriptMinOrderByAggregateInput = {
+  export type SentenceMinOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    videoId?: SortOrder
+    isHighlight?: SortOrder
+    transcriptId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TranscriptSumOrderByAggregateInput = {
+  export type SentenceSumOrderByAggregateInput = {
     id?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    videoId?: SortOrder
+    transcriptId?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -3502,18 +4759,24 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type TranscriptCreateNestedManyWithoutVideoInput = {
-    create?: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput> | TranscriptCreateWithoutVideoInput[] | TranscriptUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: TranscriptCreateOrConnectWithoutVideoInput | TranscriptCreateOrConnectWithoutVideoInput[]
-    createMany?: TranscriptCreateManyVideoInputEnvelope
-    connect?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type TranscriptUncheckedCreateNestedManyWithoutVideoInput = {
-    create?: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput> | TranscriptCreateWithoutVideoInput[] | TranscriptUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: TranscriptCreateOrConnectWithoutVideoInput | TranscriptCreateOrConnectWithoutVideoInput[]
-    createMany?: TranscriptCreateManyVideoInputEnvelope
-    connect?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
+  export type TranscriptCreateNestedOneWithoutVideoInput = {
+    create?: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput>
+    connectOrCreate?: TranscriptCreateOrConnectWithoutVideoInput
+    connect?: TranscriptWhereUniqueInput
+  }
+
+  export type TranscriptUncheckedCreateNestedOneWithoutVideoInput = {
+    create?: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput>
+    connectOrCreate?: TranscriptCreateOrConnectWithoutVideoInput
+    connect?: TranscriptWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3524,18 +4787,14 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type TranscriptUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput> | TranscriptCreateWithoutVideoInput[] | TranscriptUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: TranscriptCreateOrConnectWithoutVideoInput | TranscriptCreateOrConnectWithoutVideoInput[]
-    upsert?: TranscriptUpsertWithWhereUniqueWithoutVideoInput | TranscriptUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: TranscriptCreateManyVideoInputEnvelope
-    set?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
-    disconnect?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
-    delete?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
-    connect?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
-    update?: TranscriptUpdateWithWhereUniqueWithoutVideoInput | TranscriptUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: TranscriptUpdateManyWithWhereWithoutVideoInput | TranscriptUpdateManyWithWhereWithoutVideoInput[]
-    deleteMany?: TranscriptScalarWhereInput | TranscriptScalarWhereInput[]
+  export type TranscriptUpdateOneWithoutVideoNestedInput = {
+    create?: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput>
+    connectOrCreate?: TranscriptCreateOrConnectWithoutVideoInput
+    upsert?: TranscriptUpsertWithoutVideoInput
+    disconnect?: TranscriptWhereInput | boolean
+    delete?: TranscriptWhereInput | boolean
+    connect?: TranscriptWhereUniqueInput
+    update?: XOR<XOR<TranscriptUpdateToOneWithWhereWithoutVideoInput, TranscriptUpdateWithoutVideoInput>, TranscriptUncheckedUpdateWithoutVideoInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3546,24 +4805,76 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type TranscriptUncheckedUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput> | TranscriptCreateWithoutVideoInput[] | TranscriptUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: TranscriptCreateOrConnectWithoutVideoInput | TranscriptCreateOrConnectWithoutVideoInput[]
-    upsert?: TranscriptUpsertWithWhereUniqueWithoutVideoInput | TranscriptUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: TranscriptCreateManyVideoInputEnvelope
-    set?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
-    disconnect?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
-    delete?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
-    connect?: TranscriptWhereUniqueInput | TranscriptWhereUniqueInput[]
-    update?: TranscriptUpdateWithWhereUniqueWithoutVideoInput | TranscriptUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: TranscriptUpdateManyWithWhereWithoutVideoInput | TranscriptUpdateManyWithWhereWithoutVideoInput[]
-    deleteMany?: TranscriptScalarWhereInput | TranscriptScalarWhereInput[]
+  export type TranscriptUncheckedUpdateOneWithoutVideoNestedInput = {
+    create?: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput>
+    connectOrCreate?: TranscriptCreateOrConnectWithoutVideoInput
+    upsert?: TranscriptUpsertWithoutVideoInput
+    disconnect?: TranscriptWhereInput | boolean
+    delete?: TranscriptWhereInput | boolean
+    connect?: TranscriptWhereUniqueInput
+    update?: XOR<XOR<TranscriptUpdateToOneWithWhereWithoutVideoInput, TranscriptUpdateWithoutVideoInput>, TranscriptUncheckedUpdateWithoutVideoInput>
   }
 
-  export type VideoCreateNestedOneWithoutTranscriptsInput = {
-    create?: XOR<VideoCreateWithoutTranscriptsInput, VideoUncheckedCreateWithoutTranscriptsInput>
-    connectOrCreate?: VideoCreateOrConnectWithoutTranscriptsInput
+  export type VideoCreateNestedOneWithoutTranscriptInput = {
+    create?: XOR<VideoCreateWithoutTranscriptInput, VideoUncheckedCreateWithoutTranscriptInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutTranscriptInput
     connect?: VideoWhereUniqueInput
+  }
+
+  export type SentenceCreateNestedManyWithoutTranscriptInput = {
+    create?: XOR<SentenceCreateWithoutTranscriptInput, SentenceUncheckedCreateWithoutTranscriptInput> | SentenceCreateWithoutTranscriptInput[] | SentenceUncheckedCreateWithoutTranscriptInput[]
+    connectOrCreate?: SentenceCreateOrConnectWithoutTranscriptInput | SentenceCreateOrConnectWithoutTranscriptInput[]
+    createMany?: SentenceCreateManyTranscriptInputEnvelope
+    connect?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+  }
+
+  export type SentenceUncheckedCreateNestedManyWithoutTranscriptInput = {
+    create?: XOR<SentenceCreateWithoutTranscriptInput, SentenceUncheckedCreateWithoutTranscriptInput> | SentenceCreateWithoutTranscriptInput[] | SentenceUncheckedCreateWithoutTranscriptInput[]
+    connectOrCreate?: SentenceCreateOrConnectWithoutTranscriptInput | SentenceCreateOrConnectWithoutTranscriptInput[]
+    createMany?: SentenceCreateManyTranscriptInputEnvelope
+    connect?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+  }
+
+  export type VideoUpdateOneRequiredWithoutTranscriptNestedInput = {
+    create?: XOR<VideoCreateWithoutTranscriptInput, VideoUncheckedCreateWithoutTranscriptInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutTranscriptInput
+    upsert?: VideoUpsertWithoutTranscriptInput
+    connect?: VideoWhereUniqueInput
+    update?: XOR<XOR<VideoUpdateToOneWithWhereWithoutTranscriptInput, VideoUpdateWithoutTranscriptInput>, VideoUncheckedUpdateWithoutTranscriptInput>
+  }
+
+  export type SentenceUpdateManyWithoutTranscriptNestedInput = {
+    create?: XOR<SentenceCreateWithoutTranscriptInput, SentenceUncheckedCreateWithoutTranscriptInput> | SentenceCreateWithoutTranscriptInput[] | SentenceUncheckedCreateWithoutTranscriptInput[]
+    connectOrCreate?: SentenceCreateOrConnectWithoutTranscriptInput | SentenceCreateOrConnectWithoutTranscriptInput[]
+    upsert?: SentenceUpsertWithWhereUniqueWithoutTranscriptInput | SentenceUpsertWithWhereUniqueWithoutTranscriptInput[]
+    createMany?: SentenceCreateManyTranscriptInputEnvelope
+    set?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+    disconnect?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+    delete?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+    connect?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+    update?: SentenceUpdateWithWhereUniqueWithoutTranscriptInput | SentenceUpdateWithWhereUniqueWithoutTranscriptInput[]
+    updateMany?: SentenceUpdateManyWithWhereWithoutTranscriptInput | SentenceUpdateManyWithWhereWithoutTranscriptInput[]
+    deleteMany?: SentenceScalarWhereInput | SentenceScalarWhereInput[]
+  }
+
+  export type SentenceUncheckedUpdateManyWithoutTranscriptNestedInput = {
+    create?: XOR<SentenceCreateWithoutTranscriptInput, SentenceUncheckedCreateWithoutTranscriptInput> | SentenceCreateWithoutTranscriptInput[] | SentenceUncheckedCreateWithoutTranscriptInput[]
+    connectOrCreate?: SentenceCreateOrConnectWithoutTranscriptInput | SentenceCreateOrConnectWithoutTranscriptInput[]
+    upsert?: SentenceUpsertWithWhereUniqueWithoutTranscriptInput | SentenceUpsertWithWhereUniqueWithoutTranscriptInput[]
+    createMany?: SentenceCreateManyTranscriptInputEnvelope
+    set?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+    disconnect?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+    delete?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+    connect?: SentenceWhereUniqueInput | SentenceWhereUniqueInput[]
+    update?: SentenceUpdateWithWhereUniqueWithoutTranscriptInput | SentenceUpdateWithWhereUniqueWithoutTranscriptInput[]
+    updateMany?: SentenceUpdateManyWithWhereWithoutTranscriptInput | SentenceUpdateManyWithWhereWithoutTranscriptInput[]
+    deleteMany?: SentenceScalarWhereInput | SentenceScalarWhereInput[]
+  }
+
+  export type TranscriptCreateNestedOneWithoutSentencesInput = {
+    create?: XOR<TranscriptCreateWithoutSentencesInput, TranscriptUncheckedCreateWithoutSentencesInput>
+    connectOrCreate?: TranscriptCreateOrConnectWithoutSentencesInput
+    connect?: TranscriptWhereUniqueInput
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -3574,12 +4885,16 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type VideoUpdateOneRequiredWithoutTranscriptsNestedInput = {
-    create?: XOR<VideoCreateWithoutTranscriptsInput, VideoUncheckedCreateWithoutTranscriptsInput>
-    connectOrCreate?: VideoCreateOrConnectWithoutTranscriptsInput
-    upsert?: VideoUpsertWithoutTranscriptsInput
-    connect?: VideoWhereUniqueInput
-    update?: XOR<XOR<VideoUpdateToOneWithWhereWithoutTranscriptsInput, VideoUpdateWithoutTranscriptsInput>, VideoUncheckedUpdateWithoutTranscriptsInput>
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type TranscriptUpdateOneRequiredWithoutSentencesNestedInput = {
+    create?: XOR<TranscriptCreateWithoutSentencesInput, TranscriptUncheckedCreateWithoutSentencesInput>
+    connectOrCreate?: TranscriptCreateOrConnectWithoutSentencesInput
+    upsert?: TranscriptUpsertWithoutSentencesInput
+    connect?: TranscriptWhereUniqueInput
+    update?: XOR<XOR<TranscriptUpdateToOneWithWhereWithoutSentencesInput, TranscriptUpdateWithoutSentencesInput>, TranscriptUncheckedUpdateWithoutSentencesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3676,6 +4991,11 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[]
@@ -3692,21 +5012,25 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type TranscriptCreateWithoutVideoInput = {
-    content: string
-    startTime: number
-    endTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    sentences?: SentenceCreateNestedManyWithoutTranscriptInput
   }
 
   export type TranscriptUncheckedCreateWithoutVideoInput = {
     id?: number
-    content: string
-    startTime: number
-    endTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    sentences?: SentenceUncheckedCreateNestedManyWithoutTranscriptInput
   }
 
   export type TranscriptCreateOrConnectWithoutVideoInput = {
@@ -3714,116 +5038,211 @@ export namespace Prisma {
     create: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput>
   }
 
-  export type TranscriptCreateManyVideoInputEnvelope = {
-    data: TranscriptCreateManyVideoInput | TranscriptCreateManyVideoInput[]
-  }
-
-  export type TranscriptUpsertWithWhereUniqueWithoutVideoInput = {
-    where: TranscriptWhereUniqueInput
+  export type TranscriptUpsertWithoutVideoInput = {
     update: XOR<TranscriptUpdateWithoutVideoInput, TranscriptUncheckedUpdateWithoutVideoInput>
     create: XOR<TranscriptCreateWithoutVideoInput, TranscriptUncheckedCreateWithoutVideoInput>
+    where?: TranscriptWhereInput
   }
 
-  export type TranscriptUpdateWithWhereUniqueWithoutVideoInput = {
-    where: TranscriptWhereUniqueInput
+  export type TranscriptUpdateToOneWithWhereWithoutVideoInput = {
+    where?: TranscriptWhereInput
     data: XOR<TranscriptUpdateWithoutVideoInput, TranscriptUncheckedUpdateWithoutVideoInput>
   }
 
-  export type TranscriptUpdateManyWithWhereWithoutVideoInput = {
-    where: TranscriptScalarWhereInput
-    data: XOR<TranscriptUpdateManyMutationInput, TranscriptUncheckedUpdateManyWithoutVideoInput>
-  }
-
-  export type TranscriptScalarWhereInput = {
-    AND?: TranscriptScalarWhereInput | TranscriptScalarWhereInput[]
-    OR?: TranscriptScalarWhereInput[]
-    NOT?: TranscriptScalarWhereInput | TranscriptScalarWhereInput[]
-    id?: IntFilter<"Transcript"> | number
-    content?: StringFilter<"Transcript"> | string
-    startTime?: FloatFilter<"Transcript"> | number
-    endTime?: FloatFilter<"Transcript"> | number
-    videoId?: IntFilter<"Transcript"> | number
-    createdAt?: DateTimeFilter<"Transcript"> | Date | string
-    updatedAt?: DateTimeFilter<"Transcript"> | Date | string
-  }
-
-  export type VideoCreateWithoutTranscriptsInput = {
-    title: string
-    url: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type VideoUncheckedCreateWithoutTranscriptsInput = {
-    id?: number
-    title: string
-    url: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type VideoCreateOrConnectWithoutTranscriptsInput = {
-    where: VideoWhereUniqueInput
-    create: XOR<VideoCreateWithoutTranscriptsInput, VideoUncheckedCreateWithoutTranscriptsInput>
-  }
-
-  export type VideoUpsertWithoutTranscriptsInput = {
-    update: XOR<VideoUpdateWithoutTranscriptsInput, VideoUncheckedUpdateWithoutTranscriptsInput>
-    create: XOR<VideoCreateWithoutTranscriptsInput, VideoUncheckedCreateWithoutTranscriptsInput>
-    where?: VideoWhereInput
-  }
-
-  export type VideoUpdateToOneWithWhereWithoutTranscriptsInput = {
-    where?: VideoWhereInput
-    data: XOR<VideoUpdateWithoutTranscriptsInput, VideoUncheckedUpdateWithoutTranscriptsInput>
-  }
-
-  export type VideoUpdateWithoutTranscriptsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type VideoUncheckedUpdateWithoutTranscriptsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TranscriptCreateManyVideoInput = {
-    id?: number
-    content: string
-    startTime: number
-    endTime: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type TranscriptUpdateWithoutVideoInput = {
-    content?: StringFieldUpdateOperationsInput | string
-    startTime?: FloatFieldUpdateOperationsInput | number
-    endTime?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentences?: SentenceUpdateManyWithoutTranscriptNestedInput
   }
 
   export type TranscriptUncheckedUpdateWithoutVideoInput = {
     id?: IntFieldUpdateOperationsInput | number
-    content?: StringFieldUpdateOperationsInput | string
-    startTime?: FloatFieldUpdateOperationsInput | number
-    endTime?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentences?: SentenceUncheckedUpdateManyWithoutTranscriptNestedInput
+  }
+
+  export type VideoCreateWithoutTranscriptInput = {
+    title: string
+    url: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoUncheckedCreateWithoutTranscriptInput = {
+    id?: number
+    title: string
+    url: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCreateOrConnectWithoutTranscriptInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutTranscriptInput, VideoUncheckedCreateWithoutTranscriptInput>
+  }
+
+  export type SentenceCreateWithoutTranscriptInput = {
+    content: string
+    startTime: number
+    endTime: number
+    isHighlight?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SentenceUncheckedCreateWithoutTranscriptInput = {
+    id?: number
+    content: string
+    startTime: number
+    endTime: number
+    isHighlight?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SentenceCreateOrConnectWithoutTranscriptInput = {
+    where: SentenceWhereUniqueInput
+    create: XOR<SentenceCreateWithoutTranscriptInput, SentenceUncheckedCreateWithoutTranscriptInput>
+  }
+
+  export type SentenceCreateManyTranscriptInputEnvelope = {
+    data: SentenceCreateManyTranscriptInput | SentenceCreateManyTranscriptInput[]
+  }
+
+  export type VideoUpsertWithoutTranscriptInput = {
+    update: XOR<VideoUpdateWithoutTranscriptInput, VideoUncheckedUpdateWithoutTranscriptInput>
+    create: XOR<VideoCreateWithoutTranscriptInput, VideoUncheckedCreateWithoutTranscriptInput>
+    where?: VideoWhereInput
+  }
+
+  export type VideoUpdateToOneWithWhereWithoutTranscriptInput = {
+    where?: VideoWhereInput
+    data: XOR<VideoUpdateWithoutTranscriptInput, VideoUncheckedUpdateWithoutTranscriptInput>
+  }
+
+  export type VideoUpdateWithoutTranscriptInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TranscriptUncheckedUpdateManyWithoutVideoInput = {
+  export type VideoUncheckedUpdateWithoutTranscriptInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SentenceUpsertWithWhereUniqueWithoutTranscriptInput = {
+    where: SentenceWhereUniqueInput
+    update: XOR<SentenceUpdateWithoutTranscriptInput, SentenceUncheckedUpdateWithoutTranscriptInput>
+    create: XOR<SentenceCreateWithoutTranscriptInput, SentenceUncheckedCreateWithoutTranscriptInput>
+  }
+
+  export type SentenceUpdateWithWhereUniqueWithoutTranscriptInput = {
+    where: SentenceWhereUniqueInput
+    data: XOR<SentenceUpdateWithoutTranscriptInput, SentenceUncheckedUpdateWithoutTranscriptInput>
+  }
+
+  export type SentenceUpdateManyWithWhereWithoutTranscriptInput = {
+    where: SentenceScalarWhereInput
+    data: XOR<SentenceUpdateManyMutationInput, SentenceUncheckedUpdateManyWithoutTranscriptInput>
+  }
+
+  export type SentenceScalarWhereInput = {
+    AND?: SentenceScalarWhereInput | SentenceScalarWhereInput[]
+    OR?: SentenceScalarWhereInput[]
+    NOT?: SentenceScalarWhereInput | SentenceScalarWhereInput[]
+    id?: IntFilter<"Sentence"> | number
+    content?: StringFilter<"Sentence"> | string
+    startTime?: FloatFilter<"Sentence"> | number
+    endTime?: FloatFilter<"Sentence"> | number
+    isHighlight?: BoolFilter<"Sentence"> | boolean
+    transcriptId?: IntFilter<"Sentence"> | number
+    createdAt?: DateTimeFilter<"Sentence"> | Date | string
+    updatedAt?: DateTimeFilter<"Sentence"> | Date | string
+  }
+
+  export type TranscriptCreateWithoutSentencesInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    video: VideoCreateNestedOneWithoutTranscriptInput
+  }
+
+  export type TranscriptUncheckedCreateWithoutSentencesInput = {
+    id?: number
+    videoId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TranscriptCreateOrConnectWithoutSentencesInput = {
+    where: TranscriptWhereUniqueInput
+    create: XOR<TranscriptCreateWithoutSentencesInput, TranscriptUncheckedCreateWithoutSentencesInput>
+  }
+
+  export type TranscriptUpsertWithoutSentencesInput = {
+    update: XOR<TranscriptUpdateWithoutSentencesInput, TranscriptUncheckedUpdateWithoutSentencesInput>
+    create: XOR<TranscriptCreateWithoutSentencesInput, TranscriptUncheckedCreateWithoutSentencesInput>
+    where?: TranscriptWhereInput
+  }
+
+  export type TranscriptUpdateToOneWithWhereWithoutSentencesInput = {
+    where?: TranscriptWhereInput
+    data: XOR<TranscriptUpdateWithoutSentencesInput, TranscriptUncheckedUpdateWithoutSentencesInput>
+  }
+
+  export type TranscriptUpdateWithoutSentencesInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    video?: VideoUpdateOneRequiredWithoutTranscriptNestedInput
+  }
+
+  export type TranscriptUncheckedUpdateWithoutSentencesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SentenceCreateManyTranscriptInput = {
+    id?: number
+    content: string
+    startTime: number
+    endTime: number
+    isHighlight?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SentenceUpdateWithoutTranscriptInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    startTime?: FloatFieldUpdateOperationsInput | number
+    endTime?: FloatFieldUpdateOperationsInput | number
+    isHighlight?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SentenceUncheckedUpdateWithoutTranscriptInput = {
     id?: IntFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     startTime?: FloatFieldUpdateOperationsInput | number
     endTime?: FloatFieldUpdateOperationsInput | number
+    isHighlight?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SentenceUncheckedUpdateManyWithoutTranscriptInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    startTime?: FloatFieldUpdateOperationsInput | number
+    endTime?: FloatFieldUpdateOperationsInput | number
+    isHighlight?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3834,9 +5253,9 @@ export namespace Prisma {
    * Aliases for legacy arg types
    */
     /**
-     * @deprecated Use VideoCountOutputTypeDefaultArgs instead
+     * @deprecated Use TranscriptCountOutputTypeDefaultArgs instead
      */
-    export type VideoCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = VideoCountOutputTypeDefaultArgs<ExtArgs>
+    export type TranscriptCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TranscriptCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use VideoDefaultArgs instead
      */
@@ -3845,6 +5264,10 @@ export namespace Prisma {
      * @deprecated Use TranscriptDefaultArgs instead
      */
     export type TranscriptArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TranscriptDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SentenceDefaultArgs instead
+     */
+    export type SentenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SentenceDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

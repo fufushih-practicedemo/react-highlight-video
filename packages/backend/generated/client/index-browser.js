@@ -126,10 +126,18 @@ exports.Prisma.VideoScalarFieldEnum = {
 
 exports.Prisma.TranscriptScalarFieldEnum = {
   id: 'id',
+  videoId: 'videoId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SentenceScalarFieldEnum = {
+  id: 'id',
   content: 'content',
   startTime: 'startTime',
   endTime: 'endTime',
-  videoId: 'videoId',
+  isHighlight: 'isHighlight',
+  transcriptId: 'transcriptId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -142,7 +150,8 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.ModelName = {
   Video: 'Video',
-  Transcript: 'Transcript'
+  Transcript: 'Transcript',
+  Sentence: 'Sentence'
 };
 
 /**

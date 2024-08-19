@@ -21,15 +21,44 @@
           "type": "string",
           "format": "date-time"
         },
-        "transcripts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Transcript"
-          }
+        "transcript": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Transcript"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
     "Transcript": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "video": {
+          "$ref": "#/definitions/Video"
+        },
+        "sentences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Sentence"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Sentence": {
       "type": "object",
       "properties": {
         "id": {
@@ -44,8 +73,12 @@
         "endTime": {
           "type": "number"
         },
-        "video": {
-          "$ref": "#/definitions/Video"
+        "isHighlight": {
+          "type": "boolean",
+          "default": false
+        },
+        "transcript": {
+          "$ref": "#/definitions/Transcript"
         },
         "createdAt": {
           "type": "string",
@@ -65,6 +98,9 @@
     },
     "transcript": {
       "$ref": "#/definitions/Transcript"
+    },
+    "sentence": {
+      "$ref": "#/definitions/Sentence"
     }
   }
 }

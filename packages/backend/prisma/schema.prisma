@@ -24,16 +24,26 @@ model Video {
   url         String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  transcripts Transcript[]
+  transcript  Transcript?
 }
 
 model Transcript {
-  id        Int      @id @default(autoincrement())
-  content   String
-  startTime Float
-  endTime   Float
-  videoId   Int
-  video     Video    @relation(fields: [videoId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  videoId   Int       @unique
+  video     Video     @relation(fields: [videoId], references: [id])
+  sentences Sentence[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Sentence {
+  id           Int        @id @default(autoincrement())
+  content      String
+  startTime    Float
+  endTime      Float
+  isHighlight  Boolean    @default(false)
+  transcriptId Int
+  transcript   Transcript @relation(fields: [transcriptId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
