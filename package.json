@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "homepage": "https://fufushih-practicedemo.github.io/react-highlight-video/",
-  "packageManager": "^pnpm@6.32.4",
+  "packageManager": "^pnpm@7.1.9",
   "workspaces": [
     "packages/*"
   ],
